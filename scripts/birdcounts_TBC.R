@@ -1,15 +1,16 @@
+# Project: Tucson Urban Trees and Biodiversity
+# Script: Audubon Spring Tucson Bird Count (TBC) Data 2001 - 2021
 # Heatherlee Leary
 # hleary.wildlife@outlook.com
 # 2022-01-25
-# Project: Tucson Urban Trees and Associated (Bird, Butterfly, and Bat) Biodiversity
-# Script Objective: Audubon Spring Tucson Bird Count (TBC) Data
+
 
 
 
 ##### LOAD LIBRARIES AND IMPORT DATA #####
 
 
-# Load Libraries
+# Libraries
 library(tidyverse)
 library(tidyr)
 library(data.table)
