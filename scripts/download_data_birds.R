@@ -1,5 +1,5 @@
 # Project: Tucson Urban Trees and Biodiversity
-# Script: Download butterfly observation data from GBIF
+# Script: Download bird observation data from GBIF
 # Credit: Jeff Oliver jcoliver@arizona.edu
 # Heatherlee Leary
 # hleary.wildlife@outlook.com
@@ -10,7 +10,7 @@
 require(dplyr)   # data wrangling
 require(osmdata) # city boundaries
 require(sf)      # point filtering for cities
-source(file = "scripts/query_gbif_butterflies.R")
+source(file = "scripts/query_gbif_birds.R")
 
 
 # Load city boundary data
@@ -22,7 +22,7 @@ overwrite <- FALSE
 
 
 # NEED ASSISTANCE
-taxon_keys <- c("Aves" = ????)
+taxon_keys <- c("Aves" = 212)
 
 
 
@@ -39,7 +39,7 @@ for (city_state in city_state_string) {
   city_name <- gsub(pattern = " ",
                     replacement = "_",
                     x = city_name)
-  city_file <- paste0("data/gbif/", city_name, "-obs.csv")
+  city_file <- paste0("data/gbif/", city_name, "-bird-obs.csv")
   if (overwrite | !file.exists(city_file)) {
     message("***  Downloading data for ", city_state)
     city_poly <- osmdata::getbb(place_name = city_state, format_out = "polygon")

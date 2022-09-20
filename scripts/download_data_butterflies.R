@@ -50,7 +50,7 @@ for (city_state in city_state_string) {
   city_name <- gsub(pattern = " ",
                     replacement = "_",
                     x = city_name)
-  city_file <- paste0("data/gbif/", city_name, "-obs.csv")
+  city_file <- paste0("data/gbif/", city_name, "-butterfly-obs.csv")
   if (overwrite | !file.exists(city_file)) {
     message("***  Downloading data for ", city_state)
     city_poly <- osmdata::getbb(place_name = city_state, format_out = "polygon")
