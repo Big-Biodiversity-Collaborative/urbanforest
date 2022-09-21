@@ -46,7 +46,12 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
   gbif_obs_list <- list()
   for (taxon_key in taxon_keys) {
     # Pull out the total count of records for this taxon in this rectangle
-    taxon_count <- gbif_count[[as.character(taxon_key)]]$meta$count
+    # Accommodate idiosyncratic return depending on length of taxon_keys
+    if (length(taxon_keys) > 1) {
+      taxon_count <- gbif_count[[as.character(taxon_key)]]$meta$count
+    } else {
+      taxon_count <- gbif_count$meta$count
+    }
     if (taxon_count > 0) {
       page <- 1
       start <- 0

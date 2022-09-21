@@ -22,8 +22,9 @@ overwrite <- FALSE
 
 
 # NEED ASSISTANCE
-taxon_keys <- c("Aves" = 212)
-
+# taxon_keys <- c("Aves" = 212)
+# Testing with BCSP
+taxon_keys <- c("BCSP" = 2492104)
 
 
 # Now download data for each unique city
