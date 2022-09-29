@@ -20,7 +20,7 @@
 #' if \code{NULL}, all datasets from query will be returned
 #' 
 #' @return data frame of observations returned from GBIF
-query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
+query_gbif_butterflies <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                        cols = c("decimalLatitude", "decimalLongitude",
                                 "individualCount", "family", "species", "year", 
                                 "month", "day", "datasetName", "gbifID",

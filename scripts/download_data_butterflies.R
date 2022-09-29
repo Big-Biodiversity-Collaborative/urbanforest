@@ -66,7 +66,7 @@ for (city_state in city_state_string) {
     min_lat <- min(city_poly[, 2])
     max_lat <- max(city_poly[, 2])
     
-    city_obs <- query_gbif(taxon_keys = taxon_keys,
+    city_obs <- query_gbif_butterflies(taxon_keys = taxon_keys,
                            lon_limits = c(min_lon, max_lon),
                            lat_limits = c(min_lat, max_lat),
                            verbose = TRUE)
