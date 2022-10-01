@@ -25,7 +25,8 @@ query_gbif_birds <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE
                                 "individualCount", "family", "species", "year", 
                                 "month", "day", "datasetName", "gbifID",
                                 "lifeStage"),
-                       dataset_names = c("eBird", "iNaturalist research-grade observations")) {
+                       dataset_names = c("eBird", "iNaturalist research-grade observations"),
+                       year_range = ("2017,2021")) {
   if (!require(rgbif)) {
     stop("GBIF queries require the rgbif library")
   }
@@ -40,7 +41,8 @@ query_gbif_birds <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE
                                   decimalLongitude = paste(lon_limits[1:2],
                                                            collapse = ","),
                                   decimalLatitude = paste(lat_limits[1:2],
-                                                          collapse = ","))
+                                                          collapse = ","),
+                                    year = year_range)
   # 
   # For each family, get count and paginate as necessary
   gbif_obs_list <- list()
@@ -70,7 +72,8 @@ query_gbif_birds <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE
                                       decimalLatitude = paste(lat_limits[1:2],
                                                               collapse = ","),
                                       start = start,
-                                      limit = 300)
+                                      limit = 300,
+                                      year = year_range)
         if (page == 1) {
           gbif_obs_list[[as.character(taxon_key)]] <- gbif_obs$data
         } else {

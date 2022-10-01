@@ -56,10 +56,25 @@ for (city_state in city_state_string) {
     min_lat <- min(city_poly[, 2])
     max_lat <- max(city_poly[, 2])
     
-    city_obs <- query_gbif_birds(taxon_keys = taxon_keys,
+    
+    # Bird obs are too large, so loop over years you want to search for.
+    city_obs <- NULL
+    for (year_i in 2017:2021) {
+    
+    city_year_obs <- query_gbif_birds(taxon_keys = taxon_keys,
                            lon_limits = c(min_lon, max_lon),
                            lat_limits = c(min_lat, max_lat),
-                           verbose = TRUE)
+                           verbose = TRUE,
+                           year_range = as.character(year_i))
+    
+    # Add this year's observations to larger data frame
+    if (is.null(city_obs)){
+      city_obs <- city_year_obs
+    } else {
+      city_obs <- rbind(city_obs, city_year_obs)
+    }
+    }
+    
     
     # Convert the polygon to a simple feature for ease of filtering points
     city_sf <- sf::st_polygon(x = list(city_poly), dim = "XY")
