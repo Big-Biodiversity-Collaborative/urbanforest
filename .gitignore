@@ -37,3 +37,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Large download from GBIF
+data/gbif/0039570-220831081235567.csv
