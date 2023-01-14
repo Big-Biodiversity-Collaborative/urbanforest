@@ -21,7 +21,7 @@ overwrite <- FALSE
 
 
 
-# NEED ASSISTANCE
+# Identify which taxon data
 # taxon_keys <- c("Aves" = 212)
 # Test with Passeriformes = 729
 taxon_keys <- c("Aves" = 212)
