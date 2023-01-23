@@ -8,9 +8,10 @@
 
 # Libraries
 require(dplyr)   # data wrangling
-require(osmdata) # city boundaries
+require(tidyverse)
 require(sf)      # point filtering for cities
 require(raster)
+require(rgbif)
 source(file = "scripts/query_gbif_birds.R")
 
 
@@ -19,12 +20,17 @@ source(file = "scripts/query_gbif_birds.R")
 # Tucson Neighborhoods
 neighborhood_bounds <- st_read("data/NEIGHBORHOODS_ALL.shp")
 
+# Explore shapefile
+neighborhood_bounds
+plot(neighborhood_bounds[,2])
+colnames(neighborhood_bounds)
 
 # Indicate whether or not to overwrite data files that already exist
 overwrite <- FALSE
 
 
-# Identify which taxon data. Birds (aves) in this case.
+# Identify which taxon data. 
+# Birds (aves) in this case.
 # taxon_keys <- c("Aves" = 212)
 taxon_keys <- c("Aves" = 212)
 
@@ -33,7 +39,8 @@ taxon_keys <- c("Aves" = 212)
 neighborhood_string <- paste(neighborhood_bounds$NAME) 
 neighborhood_string <- unique(neighborhood_string)
 
-for (neighborhood in neighborhood_string) {
+
+for (neighborhood in neighborhood_string) {  
   # Make a nice name for filename, have to do it twice to avoid double 
   # underscores
   neighborhood_name <- tolower(x = gsub(pattern = ", ",
@@ -45,15 +52,13 @@ for (neighborhood in neighborhood_string) {
   neighborhood_file <- paste0("data/gbif/", neighborhood_name, "-bird-obs.csv")
   if (overwrite | !file.exists(neighborhood_file)) {
     message("***  Downloading data for ", neighborhood_name)
-    neighborhood_poly <- osmdata::getbb(place_name = neighborhood_name, format_out = "polygon")
-    # Most queries return a list, and we just want the first matrix element; when 
-    # a single polygon is returned, it is already a matrix
-    if (class(neighborhood_poly)[1] == "list") {
-      neighborhood_poly <- neighborhood_poly[[1]]
-    }
+    
+    neighborhood_poly <- osmdata::getbb(place_name = neighborhood_name, format_out = "polygon") ##### Need to extract just one neighborhood?
+  
+    
     # First find the maximum containing rectangle coordinates and use those for 
     # the GBIF query
-    min_lon <- min(neighborhood_poly[, 1])
+    min_lon <- min(neighborhood_poly[, 1]) ##### Pull from "geometry" column, but lat and long are written together in the df
     max_lon <- max(neighborhood_poly[, 1])
     min_lat <- min(neighborhood_poly[, 2])
     max_lat <- max(neighborhood_poly[, 2])
@@ -79,10 +84,14 @@ for (neighborhood in neighborhood_string) {
     
     
     # Convert the polygon to a simple feature for ease of filtering points
-    neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")
+    neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")    ##### NECESSARY?
+    
+    # Re-Project neighborhood_sf into WGS84 to match neighborhood_obs
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+    neighborhood_sf <- st_transform(neighborhood_sf, crs = wgs84)
+    
     
     # Now make the neighborhood_obs into a simple feature  
-    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
     neighborhood_obs_sf <- sf::st_as_sf(x = neighborhood_obs,
                                 coords = c("decimalLongitude", "decimalLatitude"),
                                 crs = wgs84)
