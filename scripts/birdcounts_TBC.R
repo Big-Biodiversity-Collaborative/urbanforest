@@ -1,17 +1,15 @@
 # Project: Tucson Urban Trees and Biodiversity
-# Script: Audubon Spring Tucson Bird Count (TBC) Data 2001 - 2021
+# Audubon Spring Tucson Bird Count (TBC) Data 2001 - 2021
 # Heatherlee Leary
 # hleary.wildlife@outlook.com
-# 2022-01-25
-
-
+# 2023-01-24
 
 
 ##### LOAD LIBRARIES AND IMPORT DATA #####
 
 
 # Libraries
-library(tidyverse)
+library(tidyverse)   # Data wrangling
 library(tidyr)
 library(data.table)
 
@@ -21,7 +19,7 @@ TBC_routes <- read.csv(file="data/TBC_routes.csv")
 TBC_sites <- read.csv(file="data/TBC_sites.csv")
 TBC_birds <- read.csv(file="data/TBC_birds.csv", fileEncoding = 'UTF-8-BOM') # Added the ",fileEncoding" to fix the Bite Order Mark
 
-# Reality Check
+# Explore data
 head(TBC_counts)
 head(TBC_routes)
 head(TBC_sites)
@@ -29,7 +27,7 @@ head(TBC_birds)
 
 
 
-##### MERGE SOURCE DATA #####
+##### MERGE SOURCE DATA #############################################################################################################
 
 # Merge TBC_counts with TBC_birds using species name.
 TBC_birdcounts <- merge(TBC_counts, TBC_birds, by.x = "species", by.y = "common.name", all = TRUE)
@@ -45,19 +43,16 @@ TBC_routes[,c('firstyr','lastyr','n.sites','n.sites.ret','n.sites.current','n.ye
 # I'm ok with overwriting, so I'll use the same name.
 TBC_birdcounts <- merge(TBC_birdcounts, TBC_routes, by.x = "routeID", by.y = "routeID", all = TRUE)
 
-# Aquatic birds are not useful in this study, so
-# Remove where diet = aquatic
-TBC_birdcounts <- TBC_birdcounts[!TBC_birdcounts$diet=="Aquatic",]
-
 # Reality Check
 head(TBC_birdcounts)
+tail(TBC_birdcounts)
 
 # Save as CSV. 
 write.csv(x=TBC_birdcounts, file="output/TBC_birdcounts.csv")
 
 
 
-##### RELATIVE ABUNDANCE #####
+##### RELATIVE ABUNDANCE #############################################################################################################
 
 # Relative Abundance = Total Counts / Site
 abundance_total <- TBC_birdcounts %>%
@@ -85,29 +80,17 @@ abundance_native <- TBC_birdcounts %>%
 # I'm ok with overwriting, so I'll use the same name.
 abundance_native <- merge(abundance_native, TBC_sites, by.x = "siteID", by.y = "siteID", all = TRUE)
 
-# Parse Diet
-abundance_diet <- TBC_birdcounts %>%
-  group_by(siteID,diet)%>%
-  summarise(totalcount=sum(count)) %>%
-  ungroup() # ungroup, otherwise groupings will persist.
-
-# Add location data
-# I'm ok with overwriting, so I'll use the same name.
-abundance_diet <- merge(abundance_diet, TBC_sites, by.x = "siteID", by.y = "siteID", all = TRUE)
-
 # Reality Check
 head(abundance_total)
 head(abundance_native)
-head(abundance_diet)
 
 # Save as CSV.
 write.csv(x=abundance_total, file="output/TBC_abundance_total.csv")
 write.csv(x=abundance_native, file="output/TBC_abundance_native.csv")
-write.csv(x=abundance_diet, file="output/TBC_abundance_diet.csv")
 
 
 
-##### SPECIES RICHNESS #####
+##### SPECIES RICHNESS ##############################################################################################################
 
 # Richness = Number of Species / Site
 richness_total <- TBC_birdcounts %>%
@@ -127,22 +110,13 @@ richness_native <- TBC_birdcounts %>%
 # I'm ok with overwriting, so I'll use the same name.
 richness_native <- merge(richness_native, TBC_sites, by.x = "siteID", by.y = "siteID", all = TRUE)
 
-# Parse Diet
-richness_diet <- TBC_birdcounts %>%
-  distinct(siteID,species,diet) %>%
-  count(siteID, diet)
-
-# Add location data
-# I'm ok with overwriting, so I'll use the same name.
-richness_diet <- merge(richness_diet, TBC_sites, by.x = "siteID", by.y = "siteID", all = TRUE)
 
 # Reality Check
 head(richness_total)
 head(richness_native)
-head(richness_diet)
+
 
 # Save as CSV.
 write.csv(x=richness_total, file="output/TBC_richness_total.csv")
 write.csv(x=richness_native, file="output/TBC_richness_native.csv")
-write.csv(x=richness_diet, file="output/TBC_richness_diet.csv")
 

@@ -1,7 +1,8 @@
-# Assemble single bird dataset from multiple files
+# Import multiple files and assemble single dataset
+# This script reverses what was done in the breakdown_bigdata.R script
 # Heatherlee Leary
 # hleary.wildlife@outlook.com
-# 2022-10-12
+# 2023-24-01
 
 
 library(dplyr)

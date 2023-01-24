@@ -1,0 +1,217 @@
+﻿common.name,native.US,status.SEAZ,diet,group
+Bank Swallow,Native,Migrant,Aerial arthropods,Swallow
+Barn Swallow,Native,Breeding,Aerial arthropods,Swallow
+Black Phoebe,Native,Year-Round,Aerial arthropods,Flycatcher
+Cassin's Kingbird,Native,Breeding,Aerial arthropods,Flycatcher
+Cliff Swallow,Native,Breeding,Aerial arthropods,Swallow
+Common Poorwill,Native,Breeding,Aerial arthropods,GoatsuckerSwift
+Cordilleran Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Dusky-capped Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Dusky Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Eastern Kingbird,Native,Rarity,Aerial arthropods,Flycatcher
+Gray Flycatcher,Native,Winter,Aerial arthropods,Flycatcher
+Hammond's Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Lesser Nighthawk,Native,Breeding,Aerial arthropods,GoatsuckerSwift
+Northern Beardless-Tyrannulet,Native,Breeding,Aerial arthropods,Flycatcher
+Northern Rough-winged Swallow,Native,Breeding,Aerial arthropods,Swallow
+Olive-sided Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Pacific-slope Flycatcher,Native,Breeding,Aerial arthropods,Flycatcher
+Purple Martin,Native,Breeding,Aerial arthropods,Swallow
+Say's Phoebe,Native,Year-Round,Aerial arthropods,Flycatcher
+Tree Swallow,Native,Migrant,Aerial arthropods,Swallow
+Tropical Kingbird,Native,Breeding,Aerial arthropods,Flycatcher
+Vaux's Swift,Native,Migrant,Aerial arthropods,GoatsuckerSwift
+Vermilion Flycatcher,Native,Year-Round,Aerial arthropods,Flycatcher
+Violet-green Swallow,Native,Migrant,Aerial arthropods,Swallow
+Western Kingbird,Native,Breeding,Aerial arthropods,Flycatcher
+Western Wood-Pewee,Native,Breeding,Aerial arthropods,Flycatcher
+White-throated Swift,Native,Year-Round,Aerial arthropods,GoatsuckerSwift
+Willow Flycatcher,Native,Migrant,Aerial arthropods,Flycatcher
+Ash-throated Flycatcher,Native,Breeding,Foliage arthropods,Flycatcher
+Bell's Vireo,Native,Breeding,Foliage arthropods,ShrikeVireo
+Black-headed Grosbeak,Native,Migrant,Foliage arthropods,TanagerCardinalEtAl
+Black-tailed Gnatcatcher,Native,Year-Round,Foliage arthropods,Gnatcatcher
+Black-throated Gray Warbler,Native,Winter,Foliage arthropods,Warbler
+Blue-gray Gnatcatcher,Native,Winter,Foliage arthropods,Gnatcatcher
+Bridled Titmouse,Native,Year-Round,Foliage arthropods,ChickadeeEtAl
+Brown-crested Flycatcher,Native,Breeding,Foliage arthropods,Flycatcher
+Bullock's Oriole,Native,Breeding,Foliage arthropods,Icterid
+Bushtit,Native,Year-Round,Foliage arthropods,ChickadeeEtAl
+Cassin's Vireo,Native,Migrant,Foliage arthropods,ShrikeVireo
+Common Yellowthroat,Native,Year-Round,Foliage arthropods,Warbler
+Elf Owl,Native,Year-Round,Foliage arthropods,Owl
+Hermit Warbler,Native,Migrant,Foliage arthropods,Warbler
+Hooded Oriole,Native,Breeding,Foliage arthropods,Icterid
+Hutton's Vireo,Native,Migrant,Foliage arthropods,ShrikeVireo
+Lucy's Warbler,Native,Breeding,Foliage arthropods,Warbler
+MacGillivray's Warbler,Native,Migrant,Foliage arthropods,Warbler
+Nashville Warbler,Native,Migrant,Foliage arthropods,Warbler
+Northern Parula,Native,Rarity,Foliage arthropods,Warbler
+Orange-crowned Warbler,Native,Winter,Foliage arthropods,Warbler
+Painted Redstart,Native,Breeding,Foliage arthropods,Warbler
+Plumbeous Vireo,Native,Migrant,Foliage arthropods,ShrikeVireo
+Ruby-crowned Kinglet,Native,Winter,Foliage arthropods,Kinglet
+Rufous-winged Sparrow,Native,Year-Round,Foliage arthropods,SparrowEtAl
+Scott's Oriole,Native,Breeding,Foliage arthropods,Icterid
+Summer Tanager,Native,Breeding,Foliage arthropods,TanagerCardinalEtAl
+Swainson's Thrush,Native,Migrant,Foliage arthropods,Thrush
+Tennessee Warbler,Native,Rarity,Foliage arthropods,Warbler
+Townsend's Warbler,Native,Migrant,Foliage arthropods,Warbler
+Verdin,Native,Year-Round,Foliage arthropods,ChickadeeEtAl
+Warbling Vireo,Native,Migrant,Foliage arthropods,ShrikeVireo
+Western Tanager,Native,Migrant,Foliage arthropods,TanagerCardinalEtAl
+White-eyed Vireo,Native,Rarity,Foliage arthropods,ShrikeVireo
+Wilson's Warbler,Native,Migrant,Foliage arthropods,Warbler
+Yellow-billed Cuckoo,Native,Breeding,Foliage arthropods,CuckooEtAl
+Yellow-breasted Chat,Native,Breeding,Foliage arthropods,Warbler
+Yellow-rumped Warbler,Native,Migrant,Foliage arthropods,Warbler
+Yellow Warbler,Native,Breeding,Foliage arthropods,Warbler
+Cedar Waxwing,Native,Winter,Fruits,Waxwing
+Phainopepla,Native,Year-Round,Fruits,Phainopepla
+Abert's Towhee,Native,Year-Round,Ground arthropods,SparrowEtAl
+American Pipit,Native,Winter,Ground arthropods,Pipit
+Bendire's Thrasher,Native,Year-Round,Ground arthropods,Mimid
+Bewick's Wren,Native,Year-Round,Ground arthropods,Wren
+Black-throated Sparrow,Native,Year-Round,Ground arthropods,SparrowEtAl
+Blue Grosbeak,Native,Breeding,Ground arthropods,TanagerCardinalEtAl
+Brewer's Blackbird,Native,Winter,Ground arthropods,Icterid
+Brewer's Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Bronzed Cowbird,Native,Breeding,Ground arthropods,Icterid
+Brown-headed Cowbird,Native,Year-Round,Ground arthropods,Icterid
+Cactus Wren,Native,Year-Round,Ground arthropods,Wren
+Canyon Wren,Native,Year-Round,Ground arthropods,Wren
+Chipping Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Crissal Thrasher,Native,Year-Round,Ground arthropods,Mimid
+Curve-billed Thrasher,Native,Year-Round,Ground arthropods,Mimid
+Eastern Meadowlark,Native,Year-Round,Ground arthropods,Icterid
+European Starling,Non-native,Year-Round,Ground arthropods,Starling
+Fox Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Gilded Flicker,Native,Year-Round,Ground arthropods,Woodpecker
+Greater Roadrunner,Native,Year-Round,Ground arthropods,CuckooEtAl
+Green-tailed Towhee,Native,Winter,Ground arthropods,SparrowEtAl
+House Wren,Native,Winter,Ground arthropods,Wren
+Killdeer,Native,Year-Round,Ground arthropods,Shorebird
+Lark Bunting,Native,Winter,Ground arthropods,SparrowEtAl
+Lazuli Bunting,Native,Migrant,Ground arthropods,TanagerCardinalEtAl
+Lincoln's Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Loggerhead Shrike,Native,Year-Round,Ground arthropods,ShrikeVireo
+Marsh Wren,Native,Winter,Ground arthropods,Wren
+Northern Flicker,Native,Winter,Ground arthropods,Woodpecker
+Red-winged Blackbird,Native,Year-Round,Ground arthropods,Icterid
+Rock Wren,Native,Year-Round,Ground arthropods,Wren
+Rufous-crowned Sparrow,Native,Year-Round,Ground arthropods,SparrowEtAl
+Sage Thrasher,Native,Winter,Ground arthropods,Mimid
+Savannah Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Song Sparrow,Native,Year-Round,Ground arthropods,SparrowEtAl
+Virginia's Warbler,Native,Migrant,Ground arthropods,Warbler
+Western Meadowlark,Native,Winter,Ground arthropods,Icterid
+White-crowned Sparrow,Native,Winter,Ground arthropods,SparrowEtAl
+Yellow-headed Blackbird,Native,Winter,Ground arthropods,Icterid
+Anna's Hummingbird,Native,Year-Round,Nectar,Hummingbird
+Black-chinned Hummingbird,Native,Breeding,Nectar,Hummingbird
+Broad-billed Hummingbird,Native,Breeding,Nectar,Hummingbird
+Broad-tailed Hummingbird,Native,Breeding,Nectar,Hummingbird
+Calliope Hummingbird,Native,Migrant,Nectar,Hummingbird
+Costa's Hummingbird,Native,Breeding,Nectar,Hummingbird
+Rufous Hummingbird,Native,Migrant,Nectar,Hummingbird
+Acorn Woodpecker,Native,Year-Round,Omnivorous,Woodpecker
+American Robin,Native,Winter,Omnivorous,Thrush
+Bell's Sparrow,Native,Winter,Omnivorous,Swallow
+Black-chinned Sparrow,Native,Winter,Omnivorous,SparrowEtAl
+Cassin's Sparrow,Native,Year-Round,Omnivorous,SparrowEtAl
+Chihuahuan Raven,Native,Year-Round,Omnivorous,JayRaven
+Clay-colored Sparrow,Native,Migrant,Omnivorous,SparrowEtAl
+Common Raven,Native,Year-Round,Omnivorous,JayRaven
+Grasshopper Sparrow,Native,Winter,Omnivorous,SparrowEtAl
+Great-tailed Grackle,Native,Year-Round,Omnivorous,Icterid
+Harris's Sparrow,Native,Rarity,Omnivorous,SparrowEtAl
+Hermit Thrush,Native,Winter,Omnivorous,Thrush
+Indigo Bunting,Native,Breeding,Omnivorous,TanagerCardinalEtAl
+Lewis's Woodpecker,Native,Winter,Omnivorous,Woodpecker
+Mexican Jay,Native,Year-Round,Omnivorous,JayRaven
+Montezuma Quail,Native,Year-Round,Omnivorous,Quail
+Mountain Bluebird,Native,Winter,Omnivorous,Thrush
+Northern Cardinal,Native,Year-Round,Omnivorous,TanagerCardinalEtAl
+Northern Mockingbird,Native,Year-Round,Omnivorous,Mimid
+Red-breasted Nuthatch,Native,Year-Round,Omnivorous,NuthatchCreeper
+Red-breasted Sapsucker,Native,Rarity,Omnivorous,Woodpecker
+Rose-breasted Grosbeak,Native,Rarity,Omnivorous,TanagerCardinalEtAl
+Sage Sparrow,Native,Winter,Omnivorous,SparrowEtAl
+Spotted Towhee,Native,Year-Round,Omnivorous,SparrowEtAl
+Varied Bunting,Native,Breeding,Omnivorous,TanagerCardinalEtAl
+Vesper Sparrow,Native,Winter,Omnivorous,SparrowEtAl
+Western Bluebird,Native,Winter,Omnivorous,Thrush
+Williamson's Sapsucker,Native,Winter,Omnivorous,Woodpecker
+Woodhouse's Scrub-Jay,Native,Year-Round,Omnivorous,JayRaven
+Yellow-bellied Sapsucker,Native,Rarity,Omnivorous,Woodpecker
+American Goldfinch,Native,Migrant,Seeds,Finch
+Canyon Towhee,Native,Year-Round,Seeds,SparrowEtAl
+Common Ground-Dove,Native,Year-Round,Seeds,DovePigeon
+Dark-eyed Junco,Native,Winter,Seeds,SparrowEtAl
+Eurasian Collared-Dove,Non-native,Year-Round,Seeds,DovePigeon
+Evening Grosbeak,Native,Rarity,Seeds,TanagerCardinalEtAl
+Gambel's Quail,Native,Year-Round,Seeds,Quail
+Horned Lark,Native,Year-Round,Seeds,Lark
+House Finch,Native,Year-Round,Seeds,Finch
+House Sparrow,Non-native,Year-Round,Seeds,SparrowEtAl
+Inca Dove,Native,Year-Round,Seeds,DovePigeon
+Lark Sparrow,Native,Winter,Seeds,SparrowEtAl
+Lawrence's Goldfinch,Native,Winter,Seeds,Finch
+Lesser Goldfinch,Native,Year-Round,Seeds,Finch
+Mourning Dove,Native,Year-Round,Seeds,DovePigeon
+Pine Siskin,Native,Year-Round,Seeds,Finch
+Pyrrhuloxia,Native,Year-Round,Seeds,TanagerCardinalEtAl
+Red Crossbill,Native,Winter,Seeds,Finch
+Ringed Turtle-Dove,Non-native,Released,Seeds,DovePigeon
+Rock Pigeon,Non-native,Year-Round,Seeds,DovePigeon
+Sora,Native,Winter,Seeds,Gruiform
+White-throated Sparrow,Native,Winter,Seeds,SparrowEtAl
+White-winged Dove,Native,Breeding,Seeds,DovePigeon
+Gila Woodpecker,Native,Year-Round,Trunk arthropods,Woodpecker
+Ladder-backed Woodpecker,Native,Year-Round,Trunk arthropods,Woodpecker
+Red-naped Sapsucker,Native,Winter,Trunk arthropods,Woodpecker
+White-breasted Nuthatch,Native,Year-Round,Trunk arthropods,NuthatchCreeper
+American Kestrel,Native,Year-Round,Vertebrates,Raptor
+Barn Owl,Native,Year-Round,Vertebrates,Owl
+Black Vulture,Native,Year-Round,Vertebrates,Raptor
+Burrowing Owl,Native,Year-Round,Vertebrates,Owl
+Common Black Hawk,Native,Breeding,Vertebrates,Raptor
+Cooper's Hawk,Native,Year-Round,Vertebrates,Raptor
+Ferruginous Pygmy-Owl,Native,Year-Round,Vertebrates,Owl
+Golden Eagle,Native,Migrant,Vertebrates,Raptor
+Gray Hawk,Native,Breeding,Vertebrates,Raptor
+Great Horned Owl,Native,Year-Round,Vertebrates,Owl
+Harris's Hawk,Native,Year-Round,Vertebrates,Raptor
+Long-eared Owl,Native,Year-Round,Vertebrates,Owl
+Merlin,Native,Winter,Vertebrates,Raptor
+Northern Harrier,Native,Winter,Vertebrates,Raptor
+Peregrine Falcon,Native,Year-Round,Vertebrates,Raptor
+Prairie Falcon,Native,Year-Round,Vertebrates,Raptor
+Red-tailed Hawk,Native,Year-Round,Vertebrates,Raptor
+Sharp-shinned Hawk,Native,Winter,Vertebrates,Raptor
+Swainson's Hawk,Native,Breeding,Vertebrates,Raptor
+Turkey Vulture,Native,Breeding,Vertebrates,Raptor
+Western Screech-Owl,Native,Year-Round,Vertebrates,Owl
+Zone-tailed Hawk,Native,Migrant,Vertebrates,Raptor
+American Coot,Native,Year-Round,Aquatic,Gruiform
+American Wigeon,Native,Winter,Aquatic,DuckEtAl
+Belted Kingfisher,Native,Winter,Aquatic,Kingfisher
+Black-crowned Night-Heron,Native,Year-Round,Aquatic,WadingBird
+Black-necked Stilt,Native,Year-Round,Aquatic,Shorebird
+Canvasback,Native,Winter,Aquatic,DuckEtAl
+Cinnamon Teal,Native,Winter,Aquatic,DuckEtAl
+Common Gallinule,Native,Year-Round,Aquatic,Gruiform
+Double-crested Cormorant,Native,Migrant,Aquatic,PelicanEtAl
+Great Blue Heron,Native,Year-Round,Aquatic,WadingBird
+Great Egret,Native,Winter,Aquatic,WadingBird
+Green-winged Teal,Native,Winter,Aquatic,DuckEtAl
+Green Heron,Native,Year-Round,Aquatic,WadingBird
+Mallard,Native,Year-Round,Aquatic,DuckEtAl
+Mexican Duck,Native,Year-Round,Aquatic,DuckEtAl
+Northern Pintail,Native,Winter,Aquatic,DuckEtAl
+Northern Shoveler,Native,Winter,Aquatic,DuckEtAl
+Redhead,Native,Winter,Aquatic,DuckEtAl
+Ruddy Duck,Native,Year-Round,Aquatic,DuckEtAl
+Spotted Sandpiper,Native,Winter,Aquatic,Shorebird
+Western Grebe,Native,Rarity,Aquatic,DuckEtAl
+Willet,Native,Rarity,Aquatic,Shorebird
