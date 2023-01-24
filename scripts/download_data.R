@@ -26,7 +26,7 @@ colnames(neighborhood_bounds)
 plot(neighborhood_bounds[,2])
 
 # Indicate whether or not to overwrite data files that already exist
-overwrite <- FALSE
+overwrite <- FALSE   #### What does this mean? ####
 
 
 # Identify which taxon data to pull from GBIF. 
@@ -41,8 +41,7 @@ neighborhood_string <- unique(neighborhood_string)
 
 #### Why are we doing the name of the file now? Isn't that best to save for the end? ####
 for (neighborhood in neighborhood_string) {  
-  # Make a nice name for filename, have to do it twice to avoid double 
-  # underscores
+  # Make a nice name for filename, have to do it twice to avoid double underscores
   neighborhood_name <- tolower(x = gsub(pattern = ", ",
                                 replacement = "_",
                                 x = neighborhood))
@@ -56,8 +55,7 @@ for (neighborhood in neighborhood_string) {
     neighborhood_poly <- osmdata::getbb(place_name = neighborhood_name, format_out = "polygon") ##### Need to extract just one neighborhood? ####
   
     
-    # First find the maximum containing rectangle coordinates and use those for 
-    # the GBIF query
+    # First find the maximum containing rectangle coordinates and use those for the GBIF query
     min_lon <- min(neighborhood_poly[, 1]) #### Pull from "geometry" column, but lat and long are written together in the df ####
     max_lon <- max(neighborhood_poly[, 1])
     min_lat <- min(neighborhood_poly[, 2])
@@ -84,7 +82,7 @@ for (neighborhood in neighborhood_string) {
     
     
     # Convert the polygon to a simple feature for ease of filtering points
-    neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")    ##### NECESSARY?
+    neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")    ##### NECESSARY? ####
     
     # Re-Project neighborhood_sf into WGS84 to match neighborhood_obs
     wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
