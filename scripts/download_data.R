@@ -19,14 +19,20 @@ source(file = "scripts/query_gbif.R")
 # Tucson Neighborhoods
 neighborhood_bounds <- st_read("data/NEIGHBORHOODS_ALL.shp") # This is NAD83. GBIF data will be WGS83.
 
+<<<<<<< HEAD
 # Explore data
 head(neighborhood_bounds)    #### Note that geometry doesn't have separate LAT and LONG columns ####
 class(neighborhood_bounds)   #### Why does it say "sf" and "data.frame" rather than just "data.frame"? ####
+=======
+# Explore shapefile
+head(neighborhood_bounds)
+class(neighborhood_bounds)   # This is an "sf" (spatial features) type of data frame
+>>>>>>> b900d1fe5b3cf55bd79f26775658f2ec378516bd
 colnames(neighborhood_bounds)
 plot(neighborhood_bounds[,2])
 
 # Indicate whether or not to overwrite data files that already exist
-overwrite <- FALSE   #### What does this mean? ####
+overwrite <- FALSE   
 
 
 # Identify which taxon data to pull from GBIF. 
@@ -34,32 +40,38 @@ overwrite <- FALSE   #### What does this mean? ####
 taxon_keys <- c("Aves" = 212)
 
 
-# Now download data for each unique neighborhood
-neighborhood_string <- paste(neighborhood_bounds$NAME)  ##### Isn't data already downloaded for each neighborhood? ####
-neighborhood_string <- unique(neighborhood_string)
+# Now download data for each neighborhood
+neighborhood_string <- paste(neighborhood_bounds$NAME)
+ 
+for (i in 1:nrow(neighborhood_bounds)) {
+  neighborhood <- neighborhood_bounds$NAME[i]
+  message("downloading for ", neighborhood, ", i = ", i)
+}
 
-
-#### Why are we doing the name of the file now? Isn't that best to save for the end? ####
-for (neighborhood in neighborhood_string) {  
+for (i in 1:nrow(neighborhood_bounds)) {  
+  neighborhood <- neighborhood_bounds$NAME[i]
   # Make a nice name for filename, have to do it twice to avoid double underscores
-  neighborhood_name <- tolower(x = gsub(pattern = ", ",
-                                replacement = "_",
-                                x = neighborhood))
-  neighborhood_name <- gsub(pattern = " ",
-                    replacement = "_",
-                    x = neighborhood_name)
-  neighborhood_file <- paste0("data/gbif/", neighborhood_name, "-bird-obs.csv")
+  # neighborhood_name <- tolower(x = gsub(pattern = ", ",
+  #                               replacement = "_",
+  #                               x = neighborhood))
+  # neighborhood_name <- gsub(pattern = " ",
+  #                   replacement = "_",
+  #                   x = neighborhood_name)
+  # neighborhood_file <- paste0("data/gbif/", neighborhood_name, "-bird-obs.csv")
+  neighborhood_file <- paste0("data/gbif/neighborhood-", i, "-bird-obs.csv")
   if (overwrite | !file.exists(neighborhood_file)) {
-    message("***  Downloading data for ", neighborhood_name)
+    message("***  Downloading data for ", neighborhood)
     
-    neighborhood_poly <- osmdata::getbb(place_name = neighborhood_name, format_out = "polygon") ##### Need to extract just one neighborhood? ####
-  
+    # neighborhood_poly <- neighborhood_bounds$geometry[i]
+    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+    neighborhood_poly <- st_transform(neighborhood_bounds$geometry[i], crs= wgs84)
     
     # First find the maximum containing rectangle coordinates and use those for the GBIF query
-    min_lon <- min(neighborhood_poly[, 1]) #### Pull from "geometry" column, but lat and long are written together in the df ####
-    max_lon <- max(neighborhood_poly[, 1])
-    min_lat <- min(neighborhood_poly[, 2])
-    max_lat <- max(neighborhood_poly[, 2])
+    poly_bounds <- st_bbox(neighborhood_poly)
+    min_lon <- poly_bounds["xmin"] 
+    max_lon <- poly_bounds["xmax"] 
+    min_lat <- poly_bounds["ymin"] 
+    max_lat <- poly_bounds["ymax"] 
     
     
     # Bird obs are too large, so loop over years you want to search for.
@@ -73,6 +85,11 @@ for (neighborhood in neighborhood_string) {
                            year_range = as.character(year_i))
     
     # Add this year's observations to larger data frame
+    # TODO: Update when dataset key is figured out ####
+    if ("datsetName" %in% neighborhood_year_obs){
+      neighborhood_year_obs <- neighborhood_year_obs %>%
+        dplyr::select(-datasetName)
+    }  
     if (is.null(neighborhood_obs)){
       neighborhood_obs <- neighborhood_year_obs
     } else {
@@ -82,12 +99,7 @@ for (neighborhood in neighborhood_string) {
     
     
     # Convert the polygon to a simple feature for ease of filtering points
-    neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")    ##### NECESSARY? ####
-    
-    # Re-Project neighborhood_sf into WGS84 to match neighborhood_obs
-    wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-    neighborhood_sf <- st_transform(neighborhood_sf, crs = wgs84)
-    
+    # neighborhood_sf <- sf::st_polygon(x = list(neighborhood_poly), dim = "XY")   
     
     # Now make the neighborhood_obs into a simple feature  
     neighborhood_obs_sf <- sf::st_as_sf(x = neighborhood_obs,
@@ -97,7 +109,8 @@ for (neighborhood in neighborhood_string) {
     # and use it with sf::st_within; below returns logical vector indicating 
     # whether point is within the polygon; use that vector to select rows from 
     # neighborhood_obs that are within the neighborhood polygon
-    points_within <- sf::st_within(x = neighborhood_obs_sf, y = neighborhood_sf) %>% lengths > 0
+    # points_within <- sf::st_within(x = neighborhood_obs_sf, y = neighborhood_sf) %>% lengths > 0
+    points_within <- sf::st_within(x = neighborhood_obs_sf, y = neighborhood_poly) %>% lengths > 0
     neighborhood_obs <- neighborhood_obs[points_within, ]
     write.csv(x = neighborhood_obs,
               file = neighborhood_file,

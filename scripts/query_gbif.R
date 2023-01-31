@@ -96,10 +96,12 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
     if (verbose) {
       message(nrow(all_obs), " observations before filtering by dataset name")
     }
-    all_obs <- all_obs %>%
-      dplyr::filter(datasetName %in% dataset_names)
-    if (verbose) {
-      message(nrow(all_obs), " observations after filtering by dataset name")
+    if ("datasetName" %in% colnames(all_obs)){
+      all_obs <- all_obs %>%
+        dplyr::filter(datasetName %in% dataset_names)
+      if (verbose) {
+        message(nrow(all_obs), " observations after filtering by dataset name")
+      }
     }
   }
   
