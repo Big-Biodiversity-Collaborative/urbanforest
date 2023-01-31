@@ -19,15 +19,15 @@ source(file = "scripts/query_gbif.R")
 # Tucson Neighborhoods
 neighborhood_bounds <- st_read("data/NEIGHBORHOODS_ALL.shp") # This is NAD83. GBIF data will be WGS83.
 
-<<<<<<< HEAD
+
 # Explore data
 head(neighborhood_bounds)    #### Note that geometry doesn't have separate LAT and LONG columns ####
 class(neighborhood_bounds)   #### Why does it say "sf" and "data.frame" rather than just "data.frame"? ####
-=======
+
+
 # Explore shapefile
 head(neighborhood_bounds)
 class(neighborhood_bounds)   # This is an "sf" (spatial features) type of data frame
->>>>>>> b900d1fe5b3cf55bd79f26775658f2ec378516bd
 colnames(neighborhood_bounds)
 plot(neighborhood_bounds[,2])
 
