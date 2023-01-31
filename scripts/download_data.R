@@ -1,6 +1,6 @@
 # Project: Tucson Urban Tree Equity and Bird Diversity
 # Script: Download GBIF observation data
-# Help from: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
+# Credit: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
 # Heatherlee Leary
 # hleary.wildlife@outlook.com
 # 2023-01-14
@@ -27,7 +27,7 @@ class(neighborhood_bounds)   #### Why does it say "sf" and "data.frame" rather t
 
 # Explore shapefile
 head(neighborhood_bounds)
-class(neighborhood_bounds)   # This is an "sf" (spatial features) type of data frame
+class(neighborhood_bounds)   # This is an "sf" type of data frame
 colnames(neighborhood_bounds)
 plot(neighborhood_bounds[,2])
 
@@ -85,10 +85,9 @@ for (i in 1:nrow(neighborhood_bounds)) {
                            year_range = as.character(year_i))
     
     # Add this year's observations to larger data frame
-    # TODO: Update when dataset key is figured out ####
     if ("datsetName" %in% neighborhood_year_obs){
       neighborhood_year_obs <- neighborhood_year_obs %>%
-        dplyr::select(-datasetName)
+        dplyr::select(-datasetKey)
     }  
     if (is.null(neighborhood_obs)){
       neighborhood_obs <- neighborhood_year_obs

@@ -16,16 +16,21 @@
 #' @param verbose logical indicating whether or not to print status messages
 #' @param cols columns to retain; if \code{NULL}, returns all columns that are 
 #' returned from a call to \code{rgbif::occ_search}
-#' @param dataset_names character vector of dataset names to restrict results;
+#' @param dataset_keys character vector of dataset keys to restrict results;
 #' if \code{NULL}, all datasets from query will be returned
 #' 
 #' @return data frame of observations returned from GBIF
+
+
+##### HELP: Replacing dataset_names and datasetName with dataset_keys and datasetKey. Uh... did it work?
+
 query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                        cols = c("decimalLatitude", "decimalLongitude",
                                 "individualCount", "family", "species", "year", 
-                                "month", "day", "datasetName", "gbifID",
+                                "month", "day", "datasetKey", "gbifID",
                                 "lifeStage"),
-                       dataset_names = c("eBird", "iNaturalist research-grade observations"),
+                       # dataset_names = c("eBird", "iNaturalist research-grade observations"),
+                       dataset_keys = c("4fa7b334-ce0d-4e88-aaae-2e0c138d049e", "50c9509d-22c7-4a22-a47d-8c48425ef4a7"),
                        year_range = ("2017,2021")) {
   if (!require(rgbif)) {
     stop("GBIF queries require the rgbif library")
@@ -92,15 +97,15 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
   all_obs <- dplyr::bind_rows(gbif_obs_list)
   
   # Apply dataset restrictions as necessary
-  if (nrow(all_obs) > 0 & length(dataset_names) > 0) {
+  if (nrow(all_obs) > 0 & length(dataset_keys) > 0) {
     if (verbose) {
-      message(nrow(all_obs), " observations before filtering by dataset name")
+      message(nrow(all_obs), " observations before filtering by dataset key")
     }
-    if ("datasetName" %in% colnames(all_obs)){
+    if ("datasetKey" %in% colnames(all_obs)){
       all_obs <- all_obs %>%
-        dplyr::filter(datasetName %in% dataset_names)
+        dplyr::filter(datasetKey %in% dataset_keys)
       if (verbose) {
-        message(nrow(all_obs), " observations after filtering by dataset name")
+        message(nrow(all_obs), " observations after filtering by dataset key")
       }
     }
   }
