@@ -8,7 +8,7 @@
 
 # Libraries
 require(tidyverse) # Data wrangling (dyplyr package) and visualization (ggplot2 package)
-require(sf)        # Point filtering for cities
+require(sf)        # Point filtering
 require(raster)    # Work with rasters in R (includes sp package)
 require(rgbif)     # Search and retrieve data from GBIF
 source(file = "scripts/query_gbif.R")
