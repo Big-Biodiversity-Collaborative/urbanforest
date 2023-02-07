@@ -26,9 +26,9 @@
 
 query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                        cols = c("decimalLatitude", "decimalLongitude",
-                                "individualCount", "family", "species", "year", 
-                                "month", "day", "datasetKey", "gbifID",
-                                "lifeStage"),
+                                "family", "species", "year", 
+                                "month", "day", "datasetKey", "gbifID"
+                                ),
                        # dataset_names = c("eBird", "iNaturalist research-grade observations"),
                        dataset_keys = c("4fa7b334-ce0d-4e88-aaae-2e0c138d049e", "50c9509d-22c7-4a22-a47d-8c48425ef4a7"),
                        year_range = ("2017,2021")) {
