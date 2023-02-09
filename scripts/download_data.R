@@ -84,15 +84,11 @@ for (i in 1:nrow(neighborhood_bounds)) {
                            verbose = TRUE,
                            year_range = as.character(year_i))
     
-    # Add this year's observations to larger data frame
-    if ("datsetName" %in% neighborhood_year_obs){
-      neighborhood_year_obs <- neighborhood_year_obs %>%
-        dplyr::select(-datasetKey)
-    }  
     if (is.null(neighborhood_obs)){
       neighborhood_obs <- neighborhood_year_obs
     } else {
-      neighborhood_obs <- rbind(neighborhood_obs, neighborhood_year_obs)
+      neighborhood_obs <- neighborhood_obs %>%
+        dplyr::bind_rows(neighborhood_year_obs)
     }
     }
     
