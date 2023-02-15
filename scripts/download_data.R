@@ -103,8 +103,7 @@ for (i in 1:nrow(neighborhood_bounds)) {
   if (overwrite | !file.exists(neighborhood_file)) {
     message("***  Downloading data for ", neighborhood)
     
-    # Code below checks whether the file already exists or whether it should be overwritten, 
-    # If not, it downloads bird observation data for the neighborhood using the query_gbif() function,
+    # Download bird observation data for the neighborhood using the query_gbif() function,
     # passing in the bounding coordinates for the neighborhood as well as the taxon key.
     # Bird obs are too large, so loop over years you want to search for.
     neighborhood_obs <- NULL
