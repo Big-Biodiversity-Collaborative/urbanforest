@@ -1,9 +1,7 @@
 # Project: Tucson Urban Trees and Biodiversity
 # Script: Function "query_gbif" to download records from GBIF for a set of coordinates and list of taxa
-# Credit: Jeff Oliver jcoliver@arizona.edu
-# Heatherlee Leary
-# hleary.wildlife@outlook.com
-# 2022-09-13
+# Credit: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
+# Author: Heatherlee Leary, University of Arizona, hleary.wildlife@outlook.com
 
 
 #' Download records from GBIF for a set of coordinates and list of taxa
@@ -31,7 +29,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                                 ),
                        # dataset_names = c("eBird", "iNaturalist research-grade observations"),
                        dataset_keys = c("4fa7b334-ce0d-4e88-aaae-2e0c138d049e", "50c9509d-22c7-4a22-a47d-8c48425ef4a7"),
-                       year_range = ("2017,2021")) {
+                       year_range = ("2012,2022")) {
   if (!require(rgbif)) {
     stop("GBIF queries require the rgbif library")
   }
