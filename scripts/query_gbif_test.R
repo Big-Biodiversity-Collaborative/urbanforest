@@ -24,7 +24,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                        cols = c("decimalLatitude", "decimalLongitude",
                                 "family", "species", "year", 
                                 "month", "day", "datasetKey", "gbifID"
-                                ),
+                       ),
                        # dataset_names = c("eBird", "iNaturalist research-grade observations"),
                        dataset_keys = c("4fa7b334-ce0d-4e88-aaae-2e0c138d049e", "50c9509d-22c7-4a22-a47d-8c48425ef4a7"),
                        year_range = ("2012,2022")) {
@@ -43,7 +43,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                                                            collapse = ","),
                                   decimalLatitude = paste(lat_limits[1:2],
                                                           collapse = ","),
-                                    year = year_range)
+                                  year = year_range)
   # 
   # For each family, get count and paginate as necessary
   gbif_obs_list <- list()
@@ -74,8 +74,9 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                                                               collapse = ","),
                                       start = start,
                                       limit = 300,
+                                      datasetKey = dataset_keys,
                                       year = year_range)
-     
+        
         if (page == 1) {
           gbif_obs_list[[as.character(taxon_key)]] <- gbif_obs$data
         } else {
@@ -94,10 +95,6 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
   all_obs <- dplyr::bind_rows(gbif_obs_list)
   
   # Apply dataset restrictions as necessary
-  if (nrow(all_obs) > 0 & length(dataset_keys) > 0) {
-    if (verbose) {
-      message(nrow(all_obs), " observations before filtering by dataset key")
-    }
     if ("datasetKey" %in% colnames(all_obs)){
       all_obs <- all_obs %>%
         dplyr::filter(datasetKey %in% dataset_keys)
@@ -114,7 +111,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
     # columns that do exist
     all_obs <- all_obs %>%
       dplyr::select(dplyr::intersect(cols, colnames(all_obs)))
-  }
+  
   return(all_obs)
 }
 
