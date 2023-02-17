@@ -1,16 +1,16 @@
 # Project: Tucson Urban Tree Equity and Bird Diversity
 # Script: Download GBIF observation data
 # Credit: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
-# Heatherlee Leary
-# hleary.wildlife@outlook.com
-# 2023-01-14
+# Author: Heatherlee Leary, University of Arizona, hleary.wildlife@outlook.com
 
-# Libraries
+# =======================================================================
+# Load Libraries ========================================================
+# =======================================================================
 require(tidyverse) # Data wrangling (dyplyr package) and visualization (ggplot2 package)
-require(sf)        # Point filtering for cities
+require(sf)        # Point filtering
 require(raster)    # Work with rasters in R (includes sp package)
 require(rgbif)     # Search and retrieve data from GBIF
-source(file = "scripts/query_gbif.R")
+source(file = "scripts/query_gbif.R") # Function to query GBIF
 
 # Load boundary data
 # Shapefiles obtained from City of Tucson GIS website on 2023-01-14
@@ -46,14 +46,9 @@ neighborhood_string <- paste(neighborhood_bounds$NAME)
 
 for (i in 1:nrow(neighborhood_bounds)) {
   neighborhood <- neighborhood_bounds$NAME[i]
-  # Make a nice name for filename, have to do it twice to avoid double underscores
-  # neighborhood_name <- tolower(x = gsub(pattern = ", ",
-  #                               replacement = "_",
-  #                               x = neighborhood))
-  # neighborhood_name <- gsub(pattern = " ",
-  #                   replacement = "_",
-  #                   x = neighborhood_name)
-  # neighborhood_file <- paste0("data/gbif/", neighborhood_name, "-bird-obs.csv")
+  
+  # Construct a filename for the downloaded data using the paste0() function, 
+  # which concatenates a string with the values of i and "-bird-obs.csv".  
   neighborhood_file <- paste0("data/gbif/neighborhood-", i, "-bird-obs.csv")
   if (overwrite | !file.exists(neighborhood_file)) {
     message("***  Downloading data for ", neighborhood, " (", i, " of ", length(neighborhood), ")")

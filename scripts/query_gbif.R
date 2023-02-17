@@ -1,9 +1,7 @@
 # Project: Tucson Urban Trees and Biodiversity
 # Script: Function "query_gbif" to download records from GBIF for a set of coordinates and list of taxa
-# Credit: Jeff Oliver jcoliver@arizona.edu
-# Heatherlee Leary
-# hleary.wildlife@outlook.com
-# 2022-09-13
+# Credit: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
+# Author: Heatherlee Leary, University of Arizona, hleary.wildlife@outlook.com
 
 
 #' Download records from GBIF for a set of coordinates and list of taxa

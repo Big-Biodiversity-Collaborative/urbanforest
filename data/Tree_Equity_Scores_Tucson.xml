@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <title>Map2</title>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>This dataset was calculated using American Forests’ Tree Equity Score Methodology. Tree canopy (2015) and heat severity (2013-2015) data provided by Pima Association of Governments.Census data (2019 ACS) was obtained using ESRI’s Enrich tool, which estimates census variables on irregular polygons. The scores are a metric that informs the city on how well we are delivering equitable tree cover to all our residents. The score combines &amp;quot;measures of tree canopy cover need and priority for trees in urban neighborhoods. It is derived from tree canopy cover, climate, demographic and socioeconomic data.&amp;quot; (American Forests, 2020) Definitions: Tree Equity Score (0-100): A score of 100 means tree equity has been achieved in this neighborhood. Lower scores indicate neighborhoods in greatest need of improved canopy. This metric is only calculated in populated neighborhoods. Priority Index (0-1): Higher scores indicate higher vulnerability. Includes 5 equally weighted variables: Income: Percentage of population below 200% of poverty Employment: Unemployment rate Race: Percentage of people who are not white non-Hispanic Age: Ratio of seniors and children to working-age adults Climate: Urban Heat Island severity Heat Severity (0.43-9.26): Indicates the deviance from mean surface temperatures in urbanized areas. i.e., heat severity 9 indicates the neighborhood is, on average, 9°F hotter than the mean surface temperature in Tucson. Purpose This layer was developed to assist the Green Stormwater Infrastructure identify vulnerable neighborhoods and focus GSI projects in those neighborhoods. Dataset Classification Level 0 - Open Known Uses Tree Equity Scores Dashboard https://arcg.is/1598H Known ErrorsCensus data used in the calculation of the Tree Equity Scores were derived from ESRI's Enrich tool, which creates an estimate of census It was noted upon on the creation of this layer that there are several neighborhoods with inaccurate estimations of population count. Data ContactInformation Technology Department IT_GIS@tucsonaz.gov Publisher ContactInformation Technology Department IT_GIS@tucsonaz.gov Update FrequencyAs new tree canopy data is released (rarely)</abstract>
+            <purpose>This layer contains preliminary calculations for Tucson's Tree Equity Scores, calculated using American Forests' methodology.</purpose>
+        </descript>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>Tree Equity</themekey>
+                <themekey>American Forests</themekey>
+                <themekey>PAG</themekey>
+                <themekey>tree</themekey>
+                <themekey>equity</themekey>
+                <themekey>GSI</themekey>
+            </theme>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>The City of Tucson provides the data for use &amp;quot;as is.&amp;quot; The areas depicted by this feature class are approximate, and are not accurate to surveying or engineering standards. The maps shown here are for illustration purposes only and are not suitable for site-specific decision making. Information found here should not be used for making financial or any other commitments. The City of Tucson provides this information with the understanding that it is not guaranteed to be accurate, correct or complete and conclusions drawn from such information are the responsibility of the user. While every effort has been made to ensure the accuracy, correctness and timeliness of materials presented, the City of Tucson assumes no responsibility for errors or omissions, even if The City of Tucson is advised of the possibility of such damage.</useconst>
+        <datacred>Published by City of Tucson Information Technology Department, GIS Services, GIS_IT@tucsonaz.gov</datacred>
+    </idinfo>
+    <metainfo>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>
