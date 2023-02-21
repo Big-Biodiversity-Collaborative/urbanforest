@@ -40,3 +40,9 @@ vignettes/*.pdf
 
 # Large download from GBIF
 data/gbif/0039570-220831081235567.csv
+
+# Individual neighborhood data from GBIF
+data/gbif/neighborhood-*-bird-obs.csv
+
+# Log files
+logs/*.csv

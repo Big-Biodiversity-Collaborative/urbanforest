@@ -19,7 +19,8 @@
 #' @param max_attempts integer number of maximum number of attempts for each 
 #' query to GBIF
 #' 
-#' @return data frame of observations returned from GBIF
+#' @return data frame of observations returned from GBIF, if queries failed 
+#' after \code{max_attempts} attempts, returns NULL.
 query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
                        cols = c("decimalLatitude", "decimalLongitude",
                                 "individualCount", "family", "species", "year", 
@@ -59,7 +60,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
           message("...attempt ", attempts, " failed; retrying")
         }
       }
-      Sys.sleep(time = 0.5) # half-second delay between requests
+      Sys.sleep(time = abs(rnorm(n = 1))) # delay between requests
       try(expr = {
         gbif_count <- rgbif::occ_search(taxonKey = taxon_keys,
                                         limit = 1,
@@ -77,6 +78,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
     
     if (attempts >= max_attempts & !success) {
       message("...Count failed after ", attempts, " attempts; no data for this dataset.")
+      return(NULL)
     }
     
     if (!is.null(gbif_count)) {
@@ -98,9 +100,10 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
         page <- 1
         start <- 0
         while(start <= num_obs) {
+          end_obs <- min((start + 300), num_obs)
           if (verbose) {
             message(paste0("Downloading ", (start + 1), "-", 
-                           min((start+300), num_obs), " of ", num_obs))
+                           end_obs, " of ", num_obs))
           }
           
           # Using try/catch in cases of timeout
@@ -113,7 +116,12 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
               }
             }
             try(expr = {
-              Sys.sleep(time = 0.5) # half-second delay between requests
+              if (end_obs %% 3000 == 0) {
+                # Every 3000th observation, add a longer delay
+                Sys.sleep(time = abs(rnorm(n = 1, mean = 2))) # delay between requests
+              } else {
+                Sys.sleep(time = abs(rnorm(n = 1))) # delay between requests
+              }
               gbif_query <- rgbif::occ_search(taxonKey = taxon_keys,
                                               decimalLongitude = paste(lon_limits[1:2],
                                                                        collapse = ","),
@@ -131,6 +139,7 @@ query_gbif <- function(taxon_keys, lon_limits, lat_limits, verbose = FALSE,
           
           if (attempts >= max_attempts & !success) {
             message("...Retrieval failed after ", attempts, " attempts; data may be incomplete.")
+            return(NULL)
           }
           
           # Need to add results of this query to the larger gbif_obs_list (which 
