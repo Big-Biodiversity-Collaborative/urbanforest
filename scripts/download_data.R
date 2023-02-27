@@ -83,14 +83,17 @@ for (i in 1:nrow(neighborhood_bounds)) {
     if (neighborhood %in% single_year_neighborhoods) {
       # year_i <- 2017
       failed <- FALSE
+      rectangle_obs <- NULL
       message("...large neighborhood, so downloading one year at a time")
       # while(year_i <= 2021 & !failed) {
       for (year_i in 2017:2021) {
         # First see if this year already has (temporary) data written to disk
-        year_file <- paste0("data/gbif/neighborhood-", i, "-", year_i, "temp.csv")
+        year_file <- paste0("data/gbif/neighborhood-", i, "-", year_i, "-temp.csv")
         if (file.exists(year_file)) {
           message("Reading ", neighborhood, " data for ", year_i, " from disk.")
           rectangle_year_obs <- read.csv(file = year_file)
+          # Will read in GBIF id as a numeric, but needs to be char
+          rectangle_year_obs$gbifID <- as.character(rectangle_year_obs$gbifID)
           # Add this year's observations to larger data frame (if it exists)
           if (is.null(rectangle_obs)){
             rectangle_obs <- rectangle_year_obs

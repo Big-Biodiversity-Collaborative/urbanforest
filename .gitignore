@@ -43,6 +43,8 @@ data/gbif/0039570-220831081235567.csv
 
 # Individual neighborhood data from GBIF
 data/gbif/neighborhood-*-bird-obs.csv
+data/gbif/*-temp.csv
+data/gbif/*.tsv
 
 # Log files
 logs/*.csv
