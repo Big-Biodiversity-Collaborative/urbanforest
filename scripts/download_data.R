@@ -23,11 +23,11 @@ write(x = paste0("Start time ", Sys.time()),
 # Shapefiles obtained from City of Tucson GIS website on 2023-01-14
 # Neighborhood data are all in NAD83. GBIF data will be WGS83.
 # Tucson Neighborhoods
-neighborhood_bounds <- st_read("data/NEIGHBORHOODS_ALL.shp")
+neighborhood_bounds <- st_read("data/shapefiles/NEIGHBORHOODS_ALL.shp")
 
 # Explore data
-# head(neighborhood_bounds)    #### Note that geometry doesn't have separate LAT and LONG columns ####
-# class(neighborhood_bounds)   #### Why does it say "sf" and "data.frame" rather than just "data.frame"? ####
+# head(neighborhood_bounds)    # Note that geometry doesn't have separate LAT and LONG columns
+# class(neighborhood_bounds)   
 
 # Explore shapefile
 # head(neighborhood_bounds)
@@ -195,7 +195,7 @@ for (i in 1:nrow(neighborhood_bounds)) {
   }
 }
 
-# Finally, put all these in a zip folder than can be extracted later
+# Finally, put all these in a zip folder that can be extracted later
 neighborhood_files <- list.files(path = "data/gbif",
                                  pattern = "neighborhood-.*-bird-obs.csv",
                                  full.names = TRUE)

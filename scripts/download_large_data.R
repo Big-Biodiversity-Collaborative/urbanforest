@@ -10,7 +10,7 @@ require(dplyr)
 large_neighborhoods <- c("Silverbell Golf Course", "Flowing Wells")
 
 # Load in neighborhood polygons
-neighborhood_bounds <- st_read("data/NEIGHBORHOODS_ALL.shp")
+neighborhood_bounds <- st_read("data/shapefiles/NEIGHBORHOODS_ALL.shp")
 
 # Read in a smaller dataset for column names to save
 data_1 <- read.csv(file = "data/gbif/neighborhood-1-bird-obs.csv")

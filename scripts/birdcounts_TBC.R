@@ -14,10 +14,10 @@ library(tidyr)
 library(data.table)
 
 # Read in TBC data
-TBC_counts <- read.csv(file="data/TBC_counts.csv")
-TBC_routes <- read.csv(file="data/TBC_routes.csv")
-TBC_sites <- read.csv(file="data/TBC_sites.csv")
-TBC_birds <- read.csv(file="data/TBC_birds.csv", fileEncoding = 'UTF-8-BOM') # Added the ",fileEncoding" to fix the Bite Order Mark
+TBC_counts <- read.csv(file="data/tbc/TBC_counts.csv")
+TBC_routes <- read.csv(file="data/tbc/TBC_routes.csv")
+TBC_sites <- read.csv(file="data/tbc/TBC_sites.csv")
+TBC_birds <- read.csv(file="data/tbc/TBC_birds.csv", fileEncoding = 'UTF-8-BOM') # Added the ",fileEncoding" to fix the Bite Order Mark
 
 # Explore data
 head(TBC_counts)
@@ -48,7 +48,7 @@ head(TBC_birdcounts)
 tail(TBC_birdcounts)
 
 # Save as CSV. 
-write.csv(x=TBC_birdcounts, file="output/TBC_birdcounts.csv")
+write.csv(x=TBC_birdcounts, file="data/tbc/TBC_birdcounts.csv")
 
 
 
@@ -85,8 +85,8 @@ head(abundance_total)
 head(abundance_native)
 
 # Save as CSV.
-write.csv(x=abundance_total, file="output/TBC_abundance_total.csv")
-write.csv(x=abundance_native, file="output/TBC_abundance_native.csv")
+write.csv(x=abundance_total, file="tbc/TBC_abundance_total.csv")
+write.csv(x=abundance_native, file="tbc/TBC_abundance_native.csv")
 
 
 
@@ -117,6 +117,6 @@ head(richness_native)
 
 
 # Save as CSV.
-write.csv(x=richness_total, file="output/TBC_richness_total.csv")
-write.csv(x=richness_native, file="output/TBC_richness_native.csv")
+write.csv(x=richness_total, file="tbc/TBC_richness_total.csv")
+write.csv(x=richness_native, file="tbc/TBC_richness_native.csv")
 
