@@ -1,4 +1,4 @@
-# Project: Tucson Urban Tree Equity and Bird Diversity
+# Project: Tucson Urban Tree Equity and Bird Richness
 # Script: Calculate neighborhood bird counts
 # Author: Heatherlee Leary, University of Arizona, hleary@arizona.edu
 

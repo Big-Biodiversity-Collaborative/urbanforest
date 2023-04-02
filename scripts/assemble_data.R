@@ -1,8 +1,6 @@
-# Import multiple files and assemble single dataset
-# This script assembles all the gbif observation files
-# Heatherlee Leary
-# hleary.wildlife@outlook.com
-# 2023-24-01
+# Project: Tucson Urban Tree Equity and Bird Richness
+# Script: Assemble all the GBIF observation files
+# Author: Heatherlee Leary, University of Arizona, hleary@arizona.edu
 
 
 library(dplyr)

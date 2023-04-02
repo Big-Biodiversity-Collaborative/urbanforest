@@ -1,4 +1,4 @@
-# Project: Tucson Urban Tree Equity and Bird Diversity
+# Project: Tucson Urban Tree Equity and Bird Richness
 # Script: Table connecting neighborhood name to neighborhood ID
 # Credit: Jeff Oliver, University of Arizona, jcoliver@arizona.edu
 # Author: Heatherlee Leary, University of Arizona, hleary.wildlife@outlook.com
