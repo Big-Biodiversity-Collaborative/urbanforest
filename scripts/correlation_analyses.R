@@ -1,5 +1,5 @@
 # Project: Tucson Urban Tree Equity and Bird Richness
-# Script: Analyses
+# Script: GLM and Morans I Analyses
 # Author: Heatherlee Leary, University of Arizona, hleary@arizona.edu
 
 
@@ -24,17 +24,6 @@ dim(urbanforest_geom) # 303 neighborhoods
 # =====================================================================
 # Visualization =======================================================
 # =====================================================================
-
-# Visualize bird counts across neighborhoods
-urbanforest_geom |> 
-  ggplot(aes(fill = SpcsCnt)) +
-  geom_sf(color = "black", lwd = 0.15)
-
-# Visualize Tree Equity across neighborhoods
-urbanforest_geom |>
-  ggplot(aes(fill = TreEqty)) +
-  geom_sf(color = "black", lwd = 0.15)
-
 
 
 # Visualize bird counts across neighborhoods
@@ -137,72 +126,7 @@ moran.plot(urbanforest_geom_subset$SpcsCnt, wt)
 # Spatial Clustering ===================================================
 # ======================================================================
 
-# Perform spatial clustering analysis using k-means
-set.seed(123) # For reproducibility
-k <- 5 # Number of clusters
-clusters <- kmeans(st_coordinates(urbanforest_geom_subset), centers = k)
 
-# Sort the spatial data by neighborhood name
-urbanforest_geom_subset <- urbanforest_geom_subset[order(urbanforest_geom_subset$Nghbrhd),]
-
-# Sort the cluster labels by neighborhood name
-clusters$cluster <- clusters$cluster[order(urbanforest_geom_subset$Nghbrhd)]
-
-# Replicate the cluster labels for each feature in the spatial data
-urbanforest_geom_subset$cluster <- rep(clusters$cluster, each = nrow(urbanforest_geom_subset) / length(clusters$cluster))
-
-# Plot the clusters on a map
-ggplot() +
-  geom_sf(data = urbanforest_geom_subset, aes(fill = factor(cluster)), color = NA) +
-  scale_fill_discrete(name = "Cluster") +
-  theme_void()
-
-table(clusters$cluster)
-
-
-# ======================================================================
-# Hot and Cold Spots ===================================================
-# ======================================================================
-
-# Calculate local Getis-Ord Gi* statistic for tree equity
-gi_tree <- localmoran(x = urbanforest_geom_subset$TreEqty, listw = wt, zero.policy = TRUE)
-
-# Convert to spatial dataframe
-gi_tree_sf <- st_as_sf(urbanforest_geom_subset)
-
-# Assign z-scores to the spatial dataframe
-gi_tree_sf$z <- gi_tree[, "Z.Ii"]
-
-# Create a color palette for the map
-colorPalette <- colorRampPalette(c("blue", "white", "red"))
-
-# Create a choropleth map with the calculated Getis-Ord Gi* statistic for tree equity
-ggplot(gi_tree_sf) +
-  geom_sf(aes(fill = z)) +
-  scale_fill_gradientn(colors = colorPalette(100), na.value = "grey50") +
-  theme_void() +
-  labs(title = "Hot and Cold Spots of Tree Equity in Tucson")
-
-
-
-# Calculate local Getis-Ord Gi* statistic for species count
-gi_species <- localmoran(x = urbanforest_geom_subset$SpcsCnt, listw = wt, zero.policy = TRUE)
-
-# Convert to spatial dataframe
-gi_species_sf <- st_as_sf(urbanforest_geom_subset)
-
-# Assign z-scores to the spatial dataframe
-gi_species_sf$z <- gi_species[, "Z.Ii"]
-
-# Create a color palette for the map
-colorPalette <- colorRampPalette(c("blue", "white", "red"))
-
-# Create a choropleth map with the calculated Getis-Ord Gi* statistic for species count
-ggplot(gi_species_sf) +
-  geom_sf(aes(fill = z)) +
-  scale_fill_gradientn(colors = colorPalette(100), na.value = "grey50") +
-  theme_void() +
-  labs(title = "Hot and Cold Spots of Bird Richness in Tucson")
 
 
 
@@ -213,46 +137,7 @@ ggplot(gi_species_sf) +
 require(gridExtra) # view multiple plots on the same display
 
 # Create four plots
-plot_count_gi <- ggplot(gi_species_sf) +
-  geom_sf(aes(fill = z)) +
-  scale_fill_gradientn(colors = colorPalette(100), na.value = "grey50") +
-  theme_void() +
-  labs(title = "Hot and Cold Spots of Bird Richness in Tucson",
-       caption = "Data source: GBIF eBird and iNat observations") +
-  theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
 
-
-plot_count_raw <- ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = SpcsCnt), color = "black", lwd = 0.15) +
-  scale_fill_gradient(name = "Bird counts",
-                      low = "white",
-                      high = "blue") +
-  ggtitle("Bird Richness in Tucson Neighborhoods") +
-  labs(caption = "Data source: GBIF eBird and iNat observations") +
-  theme_void() +
-  theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
-
-plot_tree_gi <- ggplot(gi_tree_sf) +
-  geom_sf(aes(fill = z)) +
-  scale_fill_gradientn(colors = colorPalette(100), na.value = "grey50") +
-  theme_void() +
-  labs(title = "Hot and Cold Spots of Tree Equity in Tucson",
-       caption = "Data Source: City of Tucson") +
-  theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
-
-plot_tree_raw <- ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = TreEqty), color = "black", lwd = 0.15) +
-  scale_fill_gradient(name = "Tree Equity Score",
-                      low = "white",
-                      high = "darkgreen") +
-  ggtitle("Tree Equity Score in Tucson Neighborhoods") +
-  labs(caption = "Data source: City of Tucson") +
-  theme_void() +
-  theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
 
 
 # Combine the plots into a grid
