@@ -85,18 +85,16 @@ urbanforest_nb <- poly2nb(urbanforest_geom, queen = TRUE)
 empty_nb <- which(card(urbanforest_nb) == 0)
 cat("Polygons with empty neighbor sets:", paste(empty_nb, collapse = ", "))
 
-# Which neighborhoods are those? 
-
+# Which neighborhoods are the ones with empty neighbor sets? 
 # Subset the urbanforest_geom object to extract polygons with empty neighbor sets
 empty_polygons <- urbanforest_geom[empty_nb, ]
-
-# View the polygons with empty neighbor sets
 empty_polygons
 
 
 # Remove polygons with empty neighbor sets from the spatial data
 urbanforest_geom_subset <- urbanforest_geom[-empty_nb, ]
 
+# Error should be resolved, so
 # Try again to identify neighbors and create weights
 tree_nbs <- urbanforest_geom_subset |> 
   mutate(
@@ -188,8 +186,6 @@ tree_gi <- tree_hot_spots |>
     title = "Tree Equity Hot Spots in Tucson"
   )
 
-# Save
-# ggsave("data/output/tree_equity_hotspots.svg")
 
 
 

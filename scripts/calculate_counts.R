@@ -18,12 +18,13 @@ colnames(bird_tes_subset)
 
 
 # We need a table containing: 
-# Neighborhood Name, Number of Species, TreeEquity, TES, PriorityCa
+# Neighborhood Name, Number of Species, Tree Equity, Area
 # Where each row represents observations for each neighborhood
 
 # Remove unnecessary columns
 urbanforest_df <- bird_tes_subset[c("species", "NAME", "AreaSqMi", "AREASqKm", "PCTTreeCov", "TreeEquity", "TES", "PriorityCa")]
 colnames(urbanforest_df)
+
 
 # Species per neighborhood (no duplicates)
 # Neighborhoods without observations are not included
@@ -57,7 +58,7 @@ neighborhood_data <- left_join(tes_prep, bird_prep, by = c("NAME" = "neighborhoo
 # Change column names
 colnames(neighborhood_data) <- c("Neighborhood", "AreaSqMi", "AreaSqKm", "PctTreeCov", "TreeEquity", "TES", "PriorityCa", "SpeciesCount")
 
-# If controlling for differences in neighborhood area,
+# If controlling for differences in neighborhood area, then
 # Create a new column of species counts per square kilometer
 neighborhood_data$CountPerSqKm <- neighborhood_data$SpeciesCount / neighborhood_data$AreaSqKm
 

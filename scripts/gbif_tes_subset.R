@@ -6,7 +6,7 @@
 # Load libraries
 require(sf)        # Point filtering
 require(raster)    # Work with rasters in R (includes sp package)
-require(dplyr)     # Manipuate data frames
+require(dplyr)     # Manipulate data frames
 
 
 # Combine tables to connect bird obs with neighborhood name and neighborhood id
