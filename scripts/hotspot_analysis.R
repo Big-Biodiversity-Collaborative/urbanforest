@@ -21,8 +21,9 @@ urbanforest_geom |>
 
 
 # Visualize data as histogram
-hist(urbanforest_geom$TreEqty) # tree equity
-hist(urbanforest_geom$SpcsCnt) # bird richness  
+hist(urbanforest_geom$TreEqty, main = "Distribution of Tree Equity Scores", xlab = "Tree Equity Score", ylab = "Frequency")
+hist(urbanforest_geom$SpcsCnt, main = "Distribution of Bird Richness", xlab = "Number of Bird Species", ylab = "Frequency")
+
 
 
 # Visualize bird species richness across neighborhoods
@@ -84,9 +85,17 @@ urbanforest_nb <- poly2nb(urbanforest_geom, queen = TRUE)
 empty_nb <- which(card(urbanforest_nb) == 0)
 cat("Polygons with empty neighbor sets:", paste(empty_nb, collapse = ", "))
 
+# Which neighborhoods are those? 
+
+# Subset the urbanforest_geom object to extract polygons with empty neighbor sets
+empty_polygons <- urbanforest_geom[empty_nb, ]
+
+# View the polygons with empty neighbor sets
+empty_polygons
+
+
 # Remove polygons with empty neighbor sets from the spatial data
 urbanforest_geom_subset <- urbanforest_geom[-empty_nb, ]
-
 
 # Try again to identify neighbors and create weights
 tree_nbs <- urbanforest_geom_subset |> 
@@ -290,9 +299,11 @@ bird_gi <- bird_hot_spots |>
 library(gridExtra) # view multiple plots on the same display
 
 # Combine the plots into a grid
-grid.arrange(bird_raw, bird_gi, tree_raw, tree_gi, ncol = 2)
+gg <- grid.arrange(tree_raw,bird_raw, ncol = 2)
+gg
 
-
+# Save the plot as a PNG file
+ggsave("output/combined_plot.png", gg, width = 10, height = 8, dpi = 300)
 
  
 

@@ -3,12 +3,12 @@
 # Author: Heatherlee Leary, University of Arizona, hleary@arizona.edu
 
 
-# Load Libraries
-require(sf)        # Point filtering
-require(sp)        # Spatial analyses
-require(spdep)     # Spatial analyses
-require(tidyverse) # Data wrangling
-require(ggplot2)   # Data visualization  
+# Load packages
+library(sf)        # Point filtering
+library(sp)        # Spatial analyses
+library(spdep)     # Spatial analyses
+library(tidyverse) # Data wrangling
+library(ggplot2)   # Data visualization  
 
 # Read in data
 urbanforest_geom <- st_read("data/urbanforest_geom.shp")
@@ -25,8 +25,12 @@ dim(urbanforest_geom) # 303 neighborhoods
 # Visualization =======================================================
 # =====================================================================
 
+# Visualize data as histogram
+hist(urbanforest_geom$TreEqty) # tree equity
+hist(urbanforest_geom$SpcsCnt) # bird richness  
 
-# Visualize bird counts across neighborhoods
+
+# Visualize bird richness across neighborhoods
 ggplot(urbanforest_geom) +
   geom_sf(aes(fill = SpcsCnt), color = "black", lwd = 0.15) +
   scale_fill_gradient(name = "Bird counts",
@@ -51,30 +55,71 @@ ggplot(urbanforest_geom) +
         legend.position = "bottom")
 
 
+# Scatterplot of tree equity vs. species count
+ggplot(urbanforest_geom, aes(x = TreEqty, y = SpcsCnt)) +
+  geom_point() +
+  ggtitle("Relationship Between Tree Equity and Bird Species Richness") +
+  xlab("Tree Equity") +
+  ylab("Species Richness")
+
 
 
 # ====================================================================
 # Correlation and Regression =========================================
 # ====================================================================
 
-# Scatterplot of tree equity vs. species count
-ggplot(urbanforest_geom, aes(x = TreEqty, y = SpcsCnt)) +
-  geom_point() +
-  xlab("Tree Equity") +
-  ylab("Species Richness")
+# Load packages
+library(car)
+library(MASS)
 
-# Correlation coefficient
-cor(urbanforest_geom$TreEqty, urbanforest_geom$SpcsCnt) # cor 0.038 
-cor.test(urbanforest_geom$TreEqty, urbanforest_geom$SpcsCnt) # p-value 0.512
 
-# Fit a linear regression model
-model_lm <- lm(SpcsCnt ~ TreEqty, data = urbanforest_geom)
-summary(model_lm)
-# The p-value for the coefficient of tree equity is 0.512
-# The R-squared value of the model is also very low, suggesting that tree equity 
-# explains only a very small proportion of the variance in species count.
+# Transform tree equity variable
+urbanforest_geom$TreEqty_log <- log(urbanforest_geom$TreEqty)
 
-# There is a weak and non-significant relationship between tree equity and species count. 
+
+# Poisson regression of natural log tree equity vs. species count 
+# with jitter, abline, and slope text label
+ggplot(urbanforest_geom, aes(x = TreEqty_log, y = SpcsCnt)) +
+  geom_point(position = "jitter", alpha = 0.5) +
+  geom_smooth(method = "glm", formula = y ~ x, se = FALSE, color = "red") +
+  annotate("text", x = 3.85, y = 50, label = paste("Slope = ", round(coef(model_glm)[2], 3))) +
+  ggtitle("Relationship between Tree Equity and Bird Richness") +
+  xlab("Tree Equity (natural log)") +
+  ylab("Species Richness")+
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"))
+
+
+
+# Fit Poisson regression model
+model_glm <- glm(SpcsCnt ~ TreEqty_log, data = urbanforest_geom, family = poisson(link = log))
+
+# Check model summary
+summary(model_glm)
+
+# Assess goodness-of-fit using diagnostic plots and tests
+# Plot fitted values vs. residuals
+plot(fitted(model_glm), residuals(model_glm, type = "pearson"),
+     xlab = "Fitted Values", ylab = "Pearson Residuals", main = "Fitted Values vs. Pearson Residuals")
+abline(h = 0, lty = 2)
+
+# Conduct Pearson goodness-of-fit test
+pearsonResiduals <- residuals(model_glm, type = "pearson")
+hist(pearsonResiduals)
+
+# Create a histogram using ggplot2
+ggplot(data.frame(residuals = pearsonResiduals), aes(x = residuals)) +
+  geom_histogram(bins = 20, fill = "grey", color = "black") +
+  labs(title = "Histogram of Pearson Residuals",
+       x = "Pearson Residuals",
+       y = "Frequency")
+
+pchisq(sum(pearsonResiduals^2), df = df.residual(model_glm), lower.tail = FALSE)
+
+# Check for overdispersion
+summary(model_glm)
 
 
 
@@ -120,28 +165,6 @@ moran.test(urbanforest_geom_subset$SpcsCnt, wt)
 # Visualize the spatial autocorrelation using Moran scatterplots
 moran.plot(urbanforest_geom_subset$TreEqty, wt)
 moran.plot(urbanforest_geom_subset$SpcsCnt, wt)
-
-
-# ======================================================================
-# Spatial Clustering ===================================================
-# ======================================================================
-
-
-
-
-
-# =====================================================================
-# Visualization =======================================================
-# =====================================================================
-
-require(gridExtra) # view multiple plots on the same display
-
-# Create four plots
-
-
-
-# Combine the plots into a grid
-grid.arrange(plot_count_gi,plot_count_raw,plot_tree_gi,plot_tree_raw, ncol = 2)
 
 
 

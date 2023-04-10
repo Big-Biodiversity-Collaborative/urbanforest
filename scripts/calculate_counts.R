@@ -57,6 +57,14 @@ neighborhood_data <- left_join(tes_prep, bird_prep, by = c("NAME" = "neighborhoo
 # Change column names
 colnames(neighborhood_data) <- c("Neighborhood", "AreaSqMi", "AreaSqKm", "PctTreeCov", "TreeEquity", "TES", "PriorityCa", "SpeciesCount")
 
+# If controlling for differences in neighborhood area,
+# Create a new column of species counts per square kilometer
+neighborhood_data$CountPerSqKm <- neighborhood_data$SpeciesCount / neighborhood_data$AreaSqKm
+
+# View the updated data frame
+head(neighborhood_data)
+
+
 # Save as csv
 write.csv(neighborhood_data, file = "data/urbanforest_data.csv", row.names = FALSE)
 
