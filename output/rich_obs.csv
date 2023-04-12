@@ -1,0 +1,467 @@
+"NID","neighborhood","speciesRich"
+1,"NEC Speedway & Kolb",29
+2,"El Rio Plaza",35
+3,"Los Ranchitos",7
+4,"22nd and Craycroft",33
+5,"El Sahuaro",17
+6,"University of Arizona",24
+7,"Valencia and Old Vail",42
+8,"Littletown",11
+9,"Wilmot Farms",0
+10,"Hermosa Hills",0
+11,"Rincon Heights",0
+12,"Windsor Park",18
+13,"Starr Pass",58
+14,"Casa Loma",5
+15,"Rancho Cancion",30
+16,"Pueblo Gardens",33
+17,"La Paloma Academy",63
+18,"Richland Heights West",2
+19,"Speedway and Silverbell",45
+20,"Business Park of the Desert",16
+21,"Sycamore Park",12
+22,"College Terrace",54
+23,"Barrio Nopal",1
+24,"Sunset Shadows",16
+25,"Davis-Monthan",94
+26,"Harrison Estates",157
+27,"Highland Vista Cinco Via",26
+28,"Joaquin Murrieta",190
+29,"Hedrick Acres",95
+30,"Parkway Terrace",62
+31,"Rancho Valencia",31
+32,"Thunderbird Heights/Wilmot Desert Esta",11
+33,"Wilmot Vista",9
+34,"Villas at Hacienda Del Sol",16
+35,"Catalina Vista",101
+36,"Goldschmidts",100
+37,"El Gheko",9
+38,"Eastlawn",23
+39,"University Villa",38
+40,"Duffy",144
+41,"McIntyre-Richey",109
+42,"Casa De Carlos",68
+43,"Summer Annexation District",19
+44,"Dodge Flower",23
+45,"Glenn-Lowell Addition",52
+46,"Dos Hombres",3
+47,"North Dodge",47
+48,"El Principal",36
+49,"Silverbell Golf Course",31
+50,"Barrio Centro",24
+51,"Arroyo Chico",1
+52,"Wilshire Heights",53
+53,"Paseo De Las Iglesias",48
+54,"Eastland Heights",33
+55,"Wrightstown Square",7
+56,"Miramonte at the River",40
+57,"Tanque Verde Trails",162
+58,"Sewell",8
+59,"Irvington & I-19 Commerce",92
+60,"Barrio Anita",33
+61,"Miles",42
+62,"Automall",52
+63,"Vactor Ranch",1
+64,"Valencia Crossing",15
+65,"Speedtano",0
+66,"The Crossing",84
+67,"Century Park",96
+68,"Best Mailing List",15
+69,"Lincoln Green",27
+70,"Seneca Terrace",32
+71,"El Cortez",53
+72,"Wilshire Terrace",9
+73,"Airport Commerce Center",13
+74,"Vista Del Rio",54
+75,"Santa Cruz Southwest",106
+76,"Vista Del Sahuaro",0
+77,"Rincon Knolls",0
+78,"St. Joseph's Hospital",13
+79,"Colonia Del Valle",16
+80,"Coyote Corridor East",32
+81,"Desert Willow Ranch",2
+82,"Valencia Reserve",0
+83,"Naylor",91
+84,"Aldea Linda",3
+85,"Fort Lowell Estates",12
+86,"Miraflores Estates",17
+87,"Tierra Vista",6
+88,"Catalina Vista/Blenman-Elm",10
+89,"Estes Park",50
+90,"Harlan Heights",30
+91,"Rillito Park",81
+92,"Broadway Pantano East",76
+93,"Broadway East",21
+94,"Agro Farms",129
+95,"Paseo Estrella",0
+96,"Rosemont East",89
+97,"Elvira",21
+98,"El Dorado Medical Offices",21
+99,"Saguaro Vista Shopping Center",31
+100,"Green Acres",26
+101,"Keeling",3
+102,"Houghton and Tanque Verde",0
+103,"Aerospace Parkway",12
+104,"Colonia Del Rio",103
+105,"Fairgrounds",0
+106,"Clarke Park",31
+107,"Rieckers",8
+108,"El Dorado Square",0
+109,"Tanque Verde and Indian Ruins",55
+110,"Roger Park",2
+111,"Las Solinas",46
+112,"Winterhaven Annex",12
+113,"Tanque Verde Creek",62
+114,"Fairview",18
+115,"Pima West",47
+116,"Doolen-Fruitvale",3
+117,"Woodland Villas",27
+118,"Sunnyside",14
+119,"National City Northwest",2
+120,"Barrio Santa Cruz",6
+121,"Houghton South",0
+122,"La Playa Caliente",23
+123,"Menlo Park",104
+124,"Creekside",74
+125,"Terra Del Sol",43
+126,"Glenn Heights",20
+127,"Rainbow Vista Estates Annex",67
+128,"Michiana",29
+129,"Williams Center",1
+130,"McCormick",24
+131,"Pima Verde West",1
+132,"International Business Center",27
+133,"Colonia Allegre",116
+134,"Groves Lincoln Park",6
+135,"Blenman-Elm",0
+136,"El Encanto",66
+137,"Pantano Park",72
+138,"Miracle Manor",29
+139,"Halcyon Acres",77
+140,"Tucson Medical Center",37
+141,"Wilmot",10
+142,"Far Horizons",35
+143,"Veteran's Hospital",71
+144,"Gilbert",14
+145,"Armory Park",0
+146,"Hidden Hills",44
+147,"Pie Allen",6
+148,"Antigua Village",15
+149,"Old Farm",21
+150,"Tucson Medical Park",80
+151,"South Harrison",2
+152,"Irvington",33
+153,"Rio Verde Village",15
+154,"Carriage Park",0
+155,"Las Colinas",60
+156,"Tanque Verde and Sabino Canyon",9
+157,"Pima Ridge",1
+158,"Rio Rancho",22
+159,"Mehl",10
+160,"Vista Montana",1
+161,"Mission De Oro",107
+162,"Longview Estates",9
+163,"Rillito Park",4
+164,"Hollows Condo",2
+165,"Cherry Avenue",1
+166,"Morris K Udall",65
+167,"Palo Verde Plaza",16
+168,"Del Lago",72
+169,"Pantano Vista",40
+170,"Corbett",21
+171,"Crossroads Festival",0
+172,"Western Hills",74
+173,"Rita Ranch",6
+174,"Bear Creek",2
+175,"Mortimore",60
+176,"Millville",23
+177,"Linden Terrace",0
+178,"River Terrace Annexation",13
+179,"Interstate Commerce Park",21
+180,"Pantano Ranch",18
+181,"Silver Creek",1
+182,"Silver Spur",35
+183,"South Park",50
+184,"Catalina Highway",4
+185,"Garden District",40
+186,"Barrio Viejo",10
+187,"Saguaro Verde",5
+188,"Mesquite Ranch",23
+189,"Cabrini",3
+190,"Broadkel",36
+191,"Rincon - University",21
+192,"Tucson Airport Authority",64
+193,"San Rafael",5
+194,"Holiday Isle",84
+195,"Beautiful Acres",49
+196,"The Monaco",53
+197,"Dorado Country Club Estates",40
+198,"Valle Trinidad",102
+199,"Broadmoor-Broadway",1
+200,"Desert Vista",19
+201,"Highland Trails",71
+202,"Desert Links",262
+203,"Broadway/Northeast",85
+204,"Enchanted Hills",17
+205,"Aviation ROW",23
+206,"Riverfront Plaza",31
+207,"Northeast Center",18
+208,"Loretta Heights",39
+209,"Rillito",4
+210,"Southlands West",0
+211,"Park Place Mall",74
+212,"West University",41
+213,"Colonia Verde",59
+214,"Hidden Hills",52
+215,"Dove - Wilmot Addition",16
+216,"Saint Phillips Plaza",77
+217,"North University",7
+218,"Miramonte",5
+219,"Broadway Estates",41
+220,"River Walk",84
+221,"Greasewood Park",21
+222,"Silvercroft",10
+223,"Richland Heights East",20
+224,"Barrio Blue Moon",11
+225,"Chantlalli Estates",0
+226,"Jefferson Park",93
+227,"Barrio Hollywood",12
+228,"Pullman",196
+229,"JT RP Annexation District",18
+230,"Mission and 36th",3
+231,"Coronado Heights",2
+232,"El Conquistador",24
+233,"Bonanza",0
+234,"Rancho De Colinas",18
+235,"San Clemente",66
+236,"Pantano's Edge",31
+237,"Cottonwood Manor",0
+238,"Santiago Hills",14
+239,"Wakefield",30
+240,"Tanque Verde and Pima",48
+241,"Ladera Brisas",127
+242,"Copper Vista",67
+243,"Vista Del Monte",32
+244,"Vista Del Pueblo",22
+245,"Tres Pueblos",12
+246,"El Dorado Office Condominium",18
+247,"Adelanto",173
+248,"Downtown",0
+249,"St. Mary's Medical Park",27
+250,"Samos",20
+251,"Los Reales",56
+252,"Golden Hills",2
+253,"Myers",70
+254,"Plaza Del Sol",12
+255,"Anklam Peaks",12
+256,"Harold Bell Wright Estates",37
+257,"San Carlos",4
+258,"McCall Addition",91
+259,"Cushing Business Center",89
+260,"Arroyo Ridge",18
+261,"Saguaro Trails",42
+262,"Brichta",51
+263,"Dunbar Spring",23
+264,"Alvernon and Drexel",87
+265,"Rincon Country",74
+266,"Rosemont Regency",209
+267,"Catalina Heights",39
+268,"Amphi",36
+269,"Rancho Mirage",49
+270,"Poets Square",6
+271,"Old Spanish Trail",1
+272,"La Granada",88
+273,"Mountain First Avenue",78
+274,"Saguaro Hill",54
+275,"Bosque Perdido",42
+276,"Rillito Riverside",29
+277,"El Rio Acres",0
+278,"Colonia Verde Plaza",37
+279,"Casitas Del Sol",59
+280,"Flowing Wells",10
+281,"Milagro",110
+282,"Oak Flower",25
+283,"River View Estates",85
+284,"Starr Pass and Greasewood",1
+285,"Roberts",1
+286,"Acacia Park",3
+287,"Western States",4
+288,"Desert Anchors",16
+289,"La Madera",5
+290,"Grant Road Industrial",1
+291,"Toumey Park",21
+292,"Marjack",23
+293,"Thomas Jay Park",4
+294,"Vista Del Rio",1
+295,"Villa Caprice Condominiums",215
+296,"Montage Vista",49
+297,"Palo Verde",29
+298,"Las Nubes",4
+299,"Grant Road Commerical Block",1
+300,"Western Hills II",96
+301,"Maryland Hills",50
+302,"Reddington Hills",3
+303,"Old Fort Lowell",66
+304,"Casitas De Palo Santo",169
+305,"Prince Village",65
+306,"Wilmot and Old Vail",5
+307,"Double Acres",43
+308,"Tanque Verde Place",24
+309,"Houghton-Old Spanish Crossing",5
+310,"Barrio Santa Rosa",5
+311,"The Triangle",21
+312,"Montrose Addition",118
+313,"Empire Vista",45
+314,"Country Glenn",16
+315,"Rose Hill",1
+316,"Stella Mann",37
+317,"Saguaro Miraflores",63
+318,"Hiawatha Hills and Teresa Terrace",43
+319,"Kingswood",140
+320,"Midvale Park",19
+321,"Pima Medical Campus",11
+322,"Carson Corner",31
+323,"Haciendas Del Oeste",0
+324,"Dietz",2
+325,"Broadway and Rosemont",4
+326,"St. Cyrils",11
+327,"Airpark 10 Annexation District",9
+328,"Sonoran Place",3
+329,"Tanque Verde and Sabino Creeks",28
+330,"Houghton East",14
+331,"Eastside",15
+332,"Tanglewood Terrace",6
+333,"Campbell-Grant",34
+334,"Southlands",6
+335,"Rose",28
+336,"Tanque Verde Bend",33
+337,"Rosemont West",16
+338,"Las Vistas",3
+339,"Sugar Hill",27
+340,"Villa Serena",37
+341,"Warwick Village",77
+342,"Old Pueblo Heights",17
+343,"Broadway Proper",29
+344,"Colonia Solana",3
+345,"Pima Verde East",11
+346,"Tucson Park West #1",21
+347,"Feldman`s",66
+348,"Alvernon and 29th",23
+349,"Linden Park",63
+350,"Desert Aire/Loma Linda",58
+351,"Bach Property",65
+352,"Silver Hills Estates",121
+353,"Rolling Hills",3
+354,"Udall Park",16
+355,"Whitmore",66
+356,"Vista Del Norte",200
+357,"Grant and Craycroft Shopping Center",42
+358,"Ironwood",98
+359,"Rancho Perdido Estates",1
+360,"Rainbow Vista Estates",0
+361,"Arcadia Rose",0
+362,"Kolb Executive Park",6
+363,"Southeast Fringe",100
+364,"Reid - Randolph",11
+365,"Tanque Verde Country Estates",206
+366,"Broadway Pantano Center",48
+367,"Cloverleaf Addition",0
+368,"Drexel Park",0
+369,"Peter Howell",5
+370,"Minarik Estates",29
+371,"San Gabriel",0
+372,"Sam Hughes",0
+373,"Cragin",7
+374,"Julian Wash Archaeological",27
+375,"El Presidio",188
+376,"Panorama Estates",0
+377,"Sombras Del Cerro",33
+378,"Columbus Village",36
+379,"Mountain View",14
+380,"Pio Decimo",0
+381,"Westwood Estates",7
+382,"Santa Maria",36
+383,"Laura Linda Parkview",48
+384,"Winterhaven",127
+385,"Kendall Square",44
+386,"Rillito Bend",29
+387,"Bravo Park Lane",5
+388,"Rancho Bueno",2
+389,"Julia Keen",4
+390,"West Lamar",46
+391,"Frontier West Estates",7
+392,"El Con Mall",24
+393,"Fairhaven",39
+394,"Ironwood Ridge",7
+395,"Avondale",0
+396,"Centre Park",2
+397,"Bronx Park",19
+398,"Valencia-Kolb",4
+399,"Iron Horse",21
+400,"Sunset Villa",224
+401,"Woodland Hills",5
+402,"Colinas De Oro",7
+403,"Eastwind",2
+404,"Barrio Kroeger Lane",0
+405,"Saguaro Canyon",13
+406,"Campana de Plata",30
+407,"Santa Rita Park",13
+408,"River Forest",12
+409,"Mitman",6
+410,"Westridge Estates",3
+411,"Desert Palms Park",258
+412,"A Mountain",0
+413,"Swan Way Park",13
+414,"Barrio San Antonio",34
+415,"Campus Farm",55
+416,"Balboa Heights",97
+417,"Sierra Estates",1
+418,"Limberlost",8
+419,"Lakeside Park",51
+420,"West Branch Santa Cruz",57
+421,"Tanque Verde Professional Plaza",31
+422,"Casa Real",1
+423,"Southland Park",142
+424,"Pantano Overlook",12
+425,"Palo Verde Park",25
+426,"Perrine Addition",73
+427,"Bear Canyon",0
+428,"Haven Ridge",14
+429,"Mountain Vail",32
+430,"Rincon Aviador",2
+431,"Kino Gateway",20
+432,"Vista Del Rio",0
+433,"Alvernon Heights",0
+434,"San Ignacio Yaqui",12
+435,"Pantano Parkview",25
+436,"Westside Development",14
+437,"Adobe Manor",3
+438,"Eastern Hills",21
+439,"The Enclave",21
+440,"Arcadia Square",110
+441,"Tucson Mall",45
+442,"Coyote Corridor",0
+443,"Heromsa Highlands",10
+444,"Evergreen",31
+445,"El Montevideo",21
+446,"Kleindale",75
+447,"Northmall Centre",42
+448,"Loma Verde",18
+449,"National City Southwest",37
+450,"Foothills Heights",0
+451,"Grabe Industrial",25
+452,"Rancho Esperero",35
+453,"Tanque Verde and Grant (North)",13
+454,"Mission Circle",2
+455,"Tanque Verde and Grant",47
+456,"Ruston Hills",17
+457,"Monte Catalina Estates",29
+458,"Saddlewood Ranch",35
+459,"Columbus Park",116
+460,"Interstate Commerce Center",32
+461,"Silverbell Terrace",21
+462,"Indian Hills North",0
+463,"El Dorado Place",0
+464,"Casitas Del Sol",18
+465,"Mission Creek",23
+466,"Bandes Addition",7
