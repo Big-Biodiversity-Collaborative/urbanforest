@@ -5,5 +5,5 @@
 citation()
 
 # Cite Packages
-citation(package = "sfdep")
+citation(package = "spdep")
 

@@ -4,21 +4,21 @@
 
 
 # Load packages
-library(sf)        # Point filtering
-library(sp)        # Spatial analyses
-library(spdep)     # Spatial analyses
-library(tidyverse) # Data wrangling
-library(ggplot2)   # Data visualization  
+require(sf)        # Point filtering
+require(sp)        # Spatial analyses
+require(spdep)     # Spatial analyses
+require(tidyverse) # Data wrangling
+require(ggplot2)   # Data visualization  
 
 # Read in data
-urbanforest_geom <- st_read("data/urbanforest_geom.shp")
+urbanforest_geom <- st_read("output/shapefiles/subset_both_data.shp")
 
 
 # Explore
 class(urbanforest_geom)
 plot(urbanforest_geom)
 head(urbanforest_geom)
-dim(urbanforest_geom) # 303 neighborhoods
+dim(urbanforest_geom)          # 297 neighborhoods
 
 
 # =====================================================================
@@ -26,25 +26,30 @@ dim(urbanforest_geom) # 303 neighborhoods
 # =====================================================================
 
 # Visualize data as histogram
-hist(urbanforest_geom$TreEqty) # tree equity
-hist(urbanforest_geom$SpcsCnt) # bird richness  
+hist(urbanforest_geom$treEqty) # tree equity
+hist(urbanforest_geom$spcsRch) # bird richness  
+
+# Median value
+median(urbanforest_geom$treEqty) # tree equity
+median(urbanforest_geom$spcsRch) # bird richness
+
 
 
 # Visualize bird richness across neighborhoods
 ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = SpcsCnt), color = "black", lwd = 0.15) +
-  scale_fill_gradient(name = "Bird counts",
+  geom_sf(aes(fill = spcsRch), color = "black", lwd = 0.15) +
+  scale_fill_gradient(name = "Richness",
                       low = "white",
                       high = "blue") +
-  ggtitle("Bird Richness in Tucson Neighborhoods") +
+  ggtitle("Bird Richness of Tucson Neighborhoods") +
   labs(caption = "Data source: GBIF eBird and iNat observations") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 
 # Visualize tree equity across neighborhoods
 ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = TreEqty), color = "black", lwd = 0.15) +
+  geom_sf(aes(fill = treEqty), color = "black", lwd = 0.15) +
   scale_fill_gradient(name = "Tree Equity Score",
                       low = "white",
                       high = "darkgreen") +
@@ -56,9 +61,9 @@ ggplot(urbanforest_geom) +
 
 
 # Scatterplot of tree equity vs. species count
-ggplot(urbanforest_geom, aes(x = TreEqty, y = SpcsCnt)) +
+ggplot(urbanforest_geom, aes(x = treEqty, y = spcsRch)) +
   geom_point() +
-  ggtitle("Relationship Between Tree Equity and Bird Species Richness") +
+  ggtitle("Relationship Between Tree Equity and Bird Richness") +
   xlab("Tree Equity") +
   ylab("Species Richness")
 
@@ -69,17 +74,22 @@ ggplot(urbanforest_geom, aes(x = TreEqty, y = SpcsCnt)) +
 # ====================================================================
 
 # Load packages
-library(car)
-library(MASS)
+require(car)
+require(MASS)
 
 
 # Transform tree equity variable
-urbanforest_geom$TreEqty_log <- log(urbanforest_geom$TreEqty)
+urbanforest_geom$treEqty_log <- log(urbanforest_geom$treEqty)
 
+# Fit Poisson regression model
+model_glm <- glm(spcsRch ~ treEqty_log, data = urbanforest_geom, family = poisson(link = log))
+
+# Check model summary
+summary(model_glm)
 
 # Poisson regression of natural log tree equity vs. species count 
 # with jitter, abline, and slope text label
-ggplot(urbanforest_geom, aes(x = TreEqty_log, y = SpcsCnt)) +
+ggplot(urbanforest_geom, aes(x = treEqty_log, y = spcsRch)) +
   geom_point(position = "jitter", alpha = 0.5) +
   geom_smooth(method = "glm", formula = y ~ x, se = FALSE, color = "red") +
   annotate("text", x = 3.85, y = 50, label = paste("Slope = ", round(coef(model_glm)[2], 3))) +
@@ -92,12 +102,6 @@ ggplot(urbanforest_geom, aes(x = TreEqty_log, y = SpcsCnt)) +
         axis.line = element_line(colour = "black"))
 
 
-
-# Fit Poisson regression model
-model_glm <- glm(SpcsCnt ~ TreEqty_log, data = urbanforest_geom, family = poisson(link = log))
-
-# Check model summary
-summary(model_glm)
 
 # Assess goodness-of-fit using diagnostic plots and tests
 # Plot fitted values vs. residuals
@@ -114,7 +118,12 @@ ggplot(data.frame(residuals = pearsonResiduals), aes(x = residuals)) +
   geom_histogram(bins = 20, fill = "grey", color = "black") +
   labs(title = "Histogram of Pearson Residuals",
        x = "Pearson Residuals",
-       y = "Frequency")
+       y = "Frequency") +
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"))
+
 
 pchisq(sum(pearsonResiduals^2), df = df.residual(model_glm), lower.tail = FALSE)
 
@@ -141,30 +150,12 @@ nb_subset <- poly2nb(urbanforest_geom_subset, queen = TRUE)
 wt <- nb2listw(nb_subset, style = "B")
 
 # Compute the Moran's I statistic to test for spatial autocorrelation
-moran.test(urbanforest_geom_subset$TreEqty, wt)
-moran.test(urbanforest_geom_subset$SpcsCnt, wt)
-
-
-# The output of the moran.test() function indicates that there is strong evidence
-# of spatial autocorrelation in the TreEqty variable but not in the SpcsCnt variable.
-# 
-# For TreEqty, the Moran's I statistic is 0.549 and the p-value is less than 2.2e-16, 
-# indicating that the observed spatial autocorrelation is significant. 
-# The Moran scatterplot also shows a clear positive relationship between each observation 
-# and the average of its neighbors, indicating positive spatial autocorrelation.
-# 
-# For SpcsCnt, the Moran's I statistic is 0.032 and the p-value is 0.1734, indicating that 
-# there is not strong evidence of spatial autocorrelation. The Moran scatterplot also shows
-# little to no relationship between each observation and the average of its neighbors, 
-# indicating little spatial autocorrelation.
-# 
-# These results suggest that the spatial distribution of TreEqty is more clustered or 
-# spatially autocorrelated than the spatial distribution of SpcsCnt.
-
+moran.test(urbanforest_geom_subset$treEqty, wt)
+moran.test(urbanforest_geom_subset$spcsRch, wt)
 
 # Visualize the spatial autocorrelation using Moran scatterplots
-moran.plot(urbanforest_geom_subset$TreEqty, wt)
-moran.plot(urbanforest_geom_subset$SpcsCnt, wt)
+moran.plot(urbanforest_geom_subset$treEqty, wt)
+moran.plot(urbanforest_geom_subset$spcsRch, wt)
 
 
 

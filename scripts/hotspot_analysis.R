@@ -4,14 +4,17 @@
 
 
 # Load Libraries
-library(sf)        # Point filtering
-library(sp)        # Spatial analyses
-library(sfdep)     # Spatial analyses
-library(tidyverse) # Data wrangling
-library(ggplot2)   # Data visualization  
+require(sf)        # Point filtering
+require(sp)        # Spatial analyses
+require(sfdep)     # Spatial analyses
+require(spdep)     # Spatial analyses
+require(dplyr)     # Data wrangling
+require(tidyr)     # Reshaping and tidying data
+require(ggplot2)   # Data visualization  
+
 
 # Read in data
-urbanforest_geom <- st_read("data/urbanforest_geom.shp")
+urbanforest_geom <- st_read("output/shapefiles/subset_both_data.shp")
 
 
 # View as tibble
@@ -21,35 +24,38 @@ urbanforest_geom |>
 
 
 # Visualize data as histogram
-hist(urbanforest_geom$TreEqty, main = "Distribution of Tree Equity Scores", xlab = "Tree Equity Score", ylab = "Frequency")
-hist(urbanforest_geom$SpcsCnt, main = "Distribution of Bird Richness", xlab = "Number of Bird Species", ylab = "Frequency")
+hist(urbanforest_geom$treEqty, main = "Distribution of Tree Equity Scores", xlab = "Tree Equity Score", ylab = "Frequency")
+hist(urbanforest_geom$spcsRch, main = "Distribution of Bird Richness", xlab = "Number of Bird Species", ylab = "Frequency")
 
 
 
 # Visualize bird species richness across neighborhoods
 bird_raw <- ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = SpcsCnt), color = "black", lwd = 0.15) +
+  geom_sf(aes(fill = spcsRch), color = "black", lwd = 0.15) +
   scale_fill_gradient(name = "Bird Richness",
                       low = "white",
                       high = "blue") +
-  ggtitle("Bird Richness in Tucson Neighborhoods") +
+  ggtitle("Bird Richness of Tucson Neighborhoods") +
   labs(caption = "Data source: GBIF eBird and iNat observations") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
+
+bird_raw
 
 # Visualize tree equity across neighborhoods
 tree_raw <- ggplot(urbanforest_geom) +
-  geom_sf(aes(fill = TreEqty), color = "black", lwd = 0.15) +
+  geom_sf(aes(fill = treEqty), color = "black", lwd = 0.15) +
   scale_fill_gradient(name = "Tree Equity Score",
                       low = "white",
                       high = "darkgreen") +
-  ggtitle("Tree Equity Score in Tucson Neighborhoods") +
+  ggtitle("Tree Equity Scores of Tucson Neighborhoods") +
   labs(caption = "Data source: City of Tucson") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 
+tree_raw
 
 # Bird richness appears to be more spread 
 # Tree equity appears to have higher values in north Tucson
@@ -69,7 +75,7 @@ tree_nbs <- urbanforest_geom |>
   mutate(
     nb = st_contiguity(geometry), # ERROR: empty neighbor sets
     wt = st_weights(nb),
-    tree_lag = st_lag(TreEqty, nb, wt)
+    tree_lag = st_lag(treEqty, nb, wt)
   ) 
 
 
@@ -88,7 +94,7 @@ cat("Polygons with empty neighbor sets:", paste(empty_nb, collapse = ", "))
 # Which neighborhoods are the ones with empty neighbor sets? 
 # Subset the urbanforest_geom object to extract polygons with empty neighbor sets
 empty_polygons <- urbanforest_geom[empty_nb, ]
-empty_polygons
+empty_polygons # Antigua Village, Mortimore, Sycamore Park
 
 
 # Remove polygons with empty neighbor sets from the spatial data
@@ -100,7 +106,7 @@ tree_nbs <- urbanforest_geom_subset |>
   mutate(
     nb = st_contiguity(geometry),        # neighbors share border/vertex
     wt = st_weights(nb),                 # row-standardized weights
-    tree_lag = st_lag(TreEqty, nb, wt)   # calculate spatial lag of TreEqty
+    tree_lag = st_lag(treEqty, nb, wt)   # calculate spatial lag of TreEqty
   ) 
 
 
@@ -118,9 +124,8 @@ tree_nbs |>
 # The Getis-Ord global G statistic is a measure of spatial autocorrelation, 
 # which assesses whether there is clustering. It tells us if nearby values 
 # are more simlar than expected under the null. 
-global_g_test(tree_nbs$TreEqty, tree_nbs$nb, tree_nbs$wt)
+global_g_test(tree_nbs$treEqty, tree_nbs$nb, tree_nbs$wt)
 
-# P-value = 0.03 suggests there is clustering (p-value < 0.05).
 
 
 
@@ -136,7 +141,7 @@ global_g_test(tree_nbs$TreEqty, tree_nbs$nb, tree_nbs$wt)
 
 tree_hot_spots <- tree_nbs |> 
   mutate(
-    Gi = local_g_perm(TreEqty, nb, wt, nsim = 499)
+    Gi = local_g_perm(treEqty, nb, wt, nsim = 499)
   ) |> 
   unnest(Gi) 
 
@@ -186,7 +191,7 @@ tree_gi <- tree_hot_spots |>
     title = "Tree Equity Hot Spots in Tucson"
   )
 
-
+tree_gi
 
 
 
@@ -199,7 +204,7 @@ bird_nbs <- urbanforest_geom_subset |>
   mutate(
     nb = st_contiguity(geometry),        # neighbors share border/vertex
     wt = st_weights(nb),                 # row-standardized weights
-    tree_lag = st_lag(SpcsCnt, nb, wt)   # calculate spatial lag of TreEqty
+    tree_lag = st_lag(spcsRch, nb, wt)   # calculate spatial lag of TreEqty
   ) 
 
 
@@ -208,34 +213,16 @@ bird_nbs |>
   ggplot(aes(fill = tree_lag)) +
   geom_sf(color = "black", lwd = 0.15)
 
-# Gradient is less obvious here, but perhaps clustering in the northwest corner
-
 
 
 # Is there any global clustering? 
-
-# The Getis-Ord global G statistic is a measure of spatial autocorrelation, 
-# which assesses whether there is clustering. It tells us if nearby values 
-# are more simlar than expected under the null. 
-global_g_test(bird_nbs$SpcsCnt, bird_nbs$nb, bird_nbs$wt)
-
-# P-value = 0.445. Not statistically significant.
-
+global_g_test(bird_nbs$spcsRch, bird_nbs$nb, bird_nbs$wt)
 
 
 # Now looking at local clustering:
-
-# We can calciulate the Gi using local_g_perm().
-# Gi is ratio of spatial lag to the sum of values for neighborhood.
-# Helps us to find the local clusters.
-
-# Create a new column called "Gi" which is the output of the local_g_perm
-# It's a dataframe column, which we can't do any work in, so we need to unnest.
-# So, its a column that contains a dataframe, and we're essentially unpacking it
-
 bird_hot_spots <- bird_nbs |> 
   mutate(
-    Gi = local_g_perm(SpcsCnt, nb, wt, nsim = 499)
+    Gi = local_g_perm(spcsRch, nb, wt, nsim = 499)
   ) |> 
   unnest(Gi) 
 
@@ -285,7 +272,7 @@ bird_gi <- bird_hot_spots |>
     title = "Bird Richness Hot Spots in Tucson"
   )
 
-
+bird_gi
 
 
 # =====================================================================
@@ -296,7 +283,7 @@ library(gridExtra) # view multiple plots on the same display
 
 # Combine the plots into a grid
 gg <- grid.arrange(tree_raw,bird_raw, ncol = 2)
-gg
+gg2 <- grid.arrange(tree_gi,bird_gi, ncol = 2)
 
 # Save the plot as a PNG file
 ggsave("output/combined_plot.png", gg, width = 10, height = 8, dpi = 300)
