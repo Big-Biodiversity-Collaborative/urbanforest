@@ -73,32 +73,6 @@ head(data_df)
 
 
 
-# Subsets
-# where treeEquity is > 0 
-# where speciesRich > 0
-# where both of those are true
-
-subset_tes <- data_df[data_df$treeEquity > 0, ]
-subset_rich <- data_df[data_df$speciesRich > 0, ]
-subset_both <- data_df[data_df$treeEquity > 0 & data_df$speciesRich > 0, ]
-
-dim(subset_tes)    # 330 neighborhoods
-dim(subset_rich)   # 424 neighborhoods
-dim(subset_both)   # 297 neighborhoods
-
-summary(subset_tes)   # range: 41.44-100.00
-summary(subset_rich)  # range: 1-262
-summary(subset_both)  # treeEquity no change, speciesRich range 1-258
-
-
-# ================================================================
-# There are a total of 466 neighborhoods (includes Davis-Monthan AFB)
-# 329 have tree equity values
-# 424 have avian species richness values
-# 297 have both data
-# =================================================================
-
-
 # Save as CSV
 # The geometry column is for a spatial data type, so we will remove it first
 data_df_no_geom <- data_df %>% 
@@ -115,7 +89,37 @@ class(data_sf)
 st_crs(data_sf) # CRS is NAD83(HARN)
 
 # Save sf object as a shapefile
-st_write(data_sf, dsn = "output/shapefiles/urbanforest_data.shp")
+st_write(data_sf, dsn = "output/shapefiles/urbanforest_data.shp", append = FALSE)
+
+
+
+# ================================================================
+# Subsets ========================================================
+# ================================================================
+
+# where Davis Monthan AFB is removed 
+# (as it is not eligible for City initiatives, or publicly accessible)
+subset_no_dm <- data_df[data_df$neighborhood != 'Davis-Monthan', ]
+
+# where treeEquity is > 0 
+subset_tes <- subset_no_dm[subset_no_dm$treeEquity > 0, ]
+
+# where speciesRich > 10 (to remove neighborhoods with very few obs)
+subset_rich <- subset_no_dm[subset_no_dm$speciesRich > 10, ]
+
+# where both of those are true
+subset_both <- subset_no_dm[subset_no_dm$treeEquity > 0 & subset_no_dm$speciesRich > 10, ]
+
+
+# View
+dim(subset_no_dm)     # 465 neighborhoods
+dim(subset_tes)       # 329 neighborhoods
+dim(subset_rich)      # 318 neighborhoods
+dim(subset_both)      # 221 neighborhoods
+
+summary(subset_tes)   # treeEquity range: 41.44-100.00
+summary(subset_rich)  # speciesRich range: 11-262
+summary(subset_both)  # treeEquity no change, speciesRich range 11-258
 
 
 
@@ -127,9 +131,9 @@ subset_rich_sf <- st_as_sf(subset_rich)
 subset_both_sf <- st_as_sf(subset_both)
 
 # Save sf object as shapefile
-st_write(subset_tes_sf, dsn = "output/shapefiles/subset_tes_data.shp")
-st_write(subset_rich_sf, dsn = "output/shapefiles/subset_rich_data.shp")
-st_write(subset_both_sf, dsn = "output/shapefiles/subset_both_data.shp")
+st_write(subset_tes_sf, dsn = "output/shapefiles/subset_tes_data.shp", append = FALSE)
+st_write(subset_rich_sf, dsn = "output/shapefiles/subset_rich_data.shp", append = FALSE)
+st_write(subset_both_sf, dsn = "output/shapefiles/subset_both_data.shp", append = FALSE)
 
 
 
