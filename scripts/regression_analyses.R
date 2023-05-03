@@ -5,8 +5,8 @@
 
 # Load packages
 require(sf)        # Point filtering
-require(sp)        # Spatial analyses
-require(spdep)     # Spatial analyses
+# require(sp)        # Spatial analyses
+# require(spdep)     # Spatial analyses
 require(tidyverse) # Data wrangling
 require(ggplot2)   # Data visualization  
 
