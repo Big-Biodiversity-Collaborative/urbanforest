@@ -1,5 +1,5 @@
 # Project: Tucson Urban Tree Equity and Bird Richness
-# Script: Correlationa and Regression
+# Script: Correlation and Regression
 # Author: Heatherlee Leary, University of Arizona, hleary@arizona.edu
 
 
@@ -18,7 +18,7 @@ urbanforest_geom <- st_read("output/shapefiles/subset_both_data.shp")
 class(urbanforest_geom)
 plot(urbanforest_geom)
 head(urbanforest_geom)
-dim(urbanforest_geom)     # 297 neighborhoods
+dim(urbanforest_geom)     
 
 
 # =====================================================================
@@ -26,26 +26,97 @@ dim(urbanforest_geom)     # 297 neighborhoods
 # =====================================================================
 
 # Visualize data as histogram
-hist(urbanforest_geom$treEqty) # tree equity
-hist(urbanforest_geom$spcsRch) # bird richness  
+# Tree equity histogram
+hist(urbanforest_geom$treEqty,
+     xlab = "Tree Equity Score",
+     ylab = "Frequency",
+     main = "Histogram of Tree Equity Scores")
+
+# Avian species richness histogram
+hist(urbanforest_geom$spcsRch,
+     xlab = "Avian Species Richness",
+     ylab = "Frequency",
+     main = "Histogram of Avian Species Richness")
+
+# Avian species richness per sq Km histogram
+hist(urbanforest_geom$rchPrSK,
+     xlab = "Avian Species Richness per sq Km",
+     ylab = "Frequency",
+     main = "Histogram of Avian Species Richness per sq Km")
+
 
 # Median value
-median(urbanforest_geom$treEqty) # tree equity
-median(urbanforest_geom$spcsRch) # bird richness
+median(urbanforest_geom$treEqty) 
+median(urbanforest_geom$spcsRch)
+median(urbanforest_geom$rchPrSK) 
+
+# Range values
+range(urbanforest_geom$treEqty) 
+range(urbanforest_geom$spcsRch)
+range(urbanforest_geom$rchPrSK) 
 
 
-
-# Visualize bird richness across neighborhoods
+# Visualize avian species richness (raw) across neighborhoods
 ggplot(urbanforest_geom) +
   geom_sf(aes(fill = spcsRch), color = "black", lwd = 0.15) +
-  scale_fill_gradient(name = "Richness",
+  scale_fill_gradient(name = "Species Richness",
                       low = "white",
                       high = "blue") +
-  ggtitle("Bird Richness of Tucson Neighborhoods") +
+  ggtitle("Raw Species Richness of Tucson Neighborhoods") +
   labs(caption = "Data source: GBIF eBird and iNat observations") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5),
         legend.position = "right")
+
+
+# Visualize avian species richness/sqkm across neighborhoods
+ggplot(urbanforest_geom) +
+  geom_sf(aes(fill = rchPrSK), color = "black", lwd = 0.15) +
+  scale_fill_gradient(name = "Richness per Sq Km",
+                      low = "white",
+                      high = "blue") +
+  ggtitle("Richness per Sq Km of Tucson Neighborhoods") +
+  labs(caption = "Data source: GBIF eBird and iNat observations") +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "right")
+
+
+# Visualization of rchPerSK
+# gradient color scale may not be the most appropriate, 
+# since it may exaggerate differences between the higher values 
+# and obscure differences between the lower values.
+# So...
+library(classInt)
+library(viridis)
+
+# Determine natural breaks using the "classInt" package
+breaks <- classIntervals(urbanforest_geom$rchPrSK, n = 8, style = "jenks")
+
+# Create a factor variable for the natural breaks
+urbanforest_geom$breaks <- as.factor(cut(urbanforest_geom$rchPrSK, breaks$brks, include.lowest = TRUE, labels = FALSE))
+
+# Create a discrete color scale with 8 colors
+colors <- viridis_pal(option = "D")(8)
+
+# Create custom labels for the breaks
+labels <- sprintf("%.2f - %.2f", breaks$brks[-length(breaks$brks)], breaks$brks[-1])
+
+# Plot the map with the natural breaks and discrete color scale
+ggplot(urbanforest_geom) +
+  geom_sf(aes(fill = breaks), color = "black", lwd = 0.15) +
+  scale_fill_viridis_d(name = "Richness per Sq Km",
+                       option = "D",
+                       direction = -1,
+                       na.value = "gray",
+                       labels = labels) +
+  ggtitle("Richness per Sq Km of Tucson Neighborhoods") +
+  labs(caption = "Data source: GBIF eBird and iNat observations") +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "right")
+
+
 
 # Visualize tree equity across neighborhoods
 ggplot(urbanforest_geom) +
@@ -57,15 +128,15 @@ ggplot(urbanforest_geom) +
   labs(caption = "Data source: City of Tucson") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 
 
-# Scatterplot of tree equity vs. species count
-ggplot(urbanforest_geom, aes(x = treEqty, y = spcsRch)) +
+# Scatterplot of tree equity vs. rich/sqKm
+ggplot(urbanforest_geom, aes(x = treEqty, y = rchPrSK)) +
   geom_point() +
-  ggtitle("Relationship Between Tree Equity and Bird Richness") +
+  ggtitle("Relationship Between Tree Equity and Richness per km2") +
   xlab("Tree Equity") +
-  ylab("Species Richness")
+  ylab("Species Richness / km2")
 
 
 
@@ -73,140 +144,121 @@ ggplot(urbanforest_geom, aes(x = treEqty, y = spcsRch)) +
 # Generalized Linear Model ===========================================
 # ====================================================================
 
-# Load packages
-require(car)
-require(MASS)
+# Fit Poisson regression model with offset
+# Essentially models the number of species per unit area
+model_poisson <- glm(spcsRch ~ treEqty + offset(log(areSqKm)),
+                     data = urbanforest_geom, family = poisson)
+
+# View summary of model results
+summary(model_poisson)
+
+# Calculate percentage change for tree equity coefficient
+(coef_as_percent <- (exp(model_poisson$coefficients["treEqty"]) - 1) * 100)
+
+# Calculate the confidence intervals for the coefficients
+ci <- confint(model_poisson)
+
+# Exponentiate the lower and upper CI values for the tree equity coefficient
+exp_ci_treEqty <- exp(ci["treEqty", ])
+
+# Print the exponentiated CI values
+print(exp_ci_treEqty)
 
 
-# Transform tree equity variable
-urbanforest_geom$treEqty_log <- log(urbanforest_geom$treEqty)
 
-# Fit Poisson regression model
-model_glm <- glm(spcsRch ~ treEqty_log, data = urbanforest_geom, family = poisson(link = log))
+# ====================================================
+# Show model results as a table ======================
+# ====================================================
 
-# Check model summary
-summary(model_glm)
+library(knitr)
+
+# Extract the coefficients, standard errors, z-values, and p-values from the summary object
+coefficients <- coef(summary(model_poisson))[, 1]
+standard_errors <- coef(summary(model_poisson))[, 2]
+z_values <- coef(summary(model_poisson))[, 3]
+p_values <- coef(summary(model_poisson))[, 4]
+
+# Format the p-values using format.pval()
+p_values_formatted <- format.pval(p_values, digits = 4)
+
+# Assemble the results into a table using kable()
+results_table <- data.frame(coefficients, standard_errors, z_values, p_values_formatted)
+rownames(results_table) <- c("(Intercept)", "treEqty")
+colnames(results_table) <- c("Estimate", "Std. Error", "z value", "Pr(>|z|)")
+kable(results_table, format = "markdown")
 
 
-# Create a scatterplot with a fitted line
-# Add the summary information as a subtitle
-# Create summary text
-summary_text <- paste("Poisson regression model summary:",
-                      "\nEstimate (treEqty_log) =", round(coef(model_glm)[2], 4),
-                      "\nPseudo R-squared =", round(1 - (deviance(model_glm) / model_glm$null.deviance), 4),
-                      "\nAIC =", round(AIC(model_glm), 4),
-                      "\nDeviance =", round(deviance(model_glm), 4),
-                      "\nAnova p-value =", round(anova(model_glm, test='Chisq')$'Pr(>Chi)'[2], 4))
 
-# Plot the scatterplot with the summary text as a subtitle
-ggplot(urbanforest_geom, aes(x = treEqty_log, y = spcsRch)) +
-  geom_point(position = "jitter", alpha = 0.5) +
-  geom_smooth(method = "glm", formula = y ~ x, se = FALSE, color = "red") +
-  annotate("text", x = 3.85, y = 50, label = paste("Slope = ", round(coef(model_glm)[2], 3))) +
-  ggtitle("Relationship between Tree Equity and Bird Richness") +
-  xlab("Tree Equity (natural log)") +
-  ylab("Species Richness")+
-  theme(panel.background = element_blank(),
+library(openxlsx)
+
+# Export the table to an Excel file
+write.xlsx(results_table, file = "results_table.xlsx", sheetName = "GLM Results", rowNames = TRUE)
+
+
+
+# ====================================================
+# Plot the model predictions =========================
+# ====================================================
+
+# Create a new column that
+# Calculates the predicted species richness for each neighborhood 
+# based on the Poisson regression model results.
+urbanforest_geom <- urbanforest_geom %>%
+  mutate(predicted_species_richness = exp(1.4763451 + 0.0319357 * treEqty))
+
+# Visualize using natural breaks
+#library(classInt)
+
+# Calculate the natural breaks (Jenks breaks) for the predicted_species_richness values
+n_breaks <- 5
+jenks_breaks <- classIntervals(urbanforest_geom$predicted_species_richness,
+                               n = n_breaks, style = "jenks")$brks
+
+# Create breaks and labels for the highest and lowest Jenks breaks
+min_max_jenks_breaks <- c(jenks_breaks[1], jenks_breaks[length(jenks_breaks)])
+min_max_jenks_labels <- format(min_max_jenks_breaks, digits = 2, scientific = FALSE)
+
+# Create the choropleth map with natural breaks and the highest and lowest values on the legend
+# library(viridis)
+ggplot() +
+  geom_sf(data = urbanforest_geom, 
+          aes(fill = predicted_species_richness, geometry = geometry),
+          color = "black", size = 0.1) +
+  scale_fill_viridis(option = "magma", # or add trans="log"
+                     name = "Predicted\nSpecies Richness",
+                     breaks = min_max_jenks_breaks,
+                     labels = min_max_jenks_labels) +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
         panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(colour = "black"),
-        plot.subtitle = element_text(hjust = 0, size = 10)) + # Adjust subtitle appearance
-  labs(subtitle = summary_text) # Add the summary text as the subtitle
-
-
-# Assess goodness-of-fit using diagnostic plots and tests
-# Plot fitted values vs. residuals
-plot(fitted(model_glm), residuals(model_glm, type = "pearson"),
-     xlab = "Fitted Values", ylab = "Pearson Residuals", main = "Fitted Values vs. Pearson Residuals")
-abline(h = 0, lty = 2)
-
-# Conduct Pearson goodness-of-fit test
-pearsonResiduals <- residuals(model_glm, type = "pearson")
-hist(pearsonResiduals)
-
-# Create a histogram using ggplot2
-ggplot(data.frame(residuals = pearsonResiduals), aes(x = residuals)) +
-  geom_histogram(bins = 20, fill = "grey", color = "black") +
-  labs(title = "Histogram of Pearson Residuals",
-       x = "Pearson Residuals",
-       y = "Frequency") +
-  theme(panel.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(colour = "black"))
-
-
-# P-value for Pearson goodness-of-fit test
-pchisq(sum(pearsonResiduals^2), df = df.residual(model_glm), lower.tail = FALSE)
-# Indicates model is not a good fit.
-
-
-# Check for overdispersion
-require(performance)
-check_overdispersion(model_glm)
-
-# Calculate residual deviance and degrees of freedom
-residual_deviance <- deviance(model_glm, type = "residual")
-degrees_of_freedom <- df.residual(model_glm)
-
-# Compare residual deviance to degrees of freedom
-if (residual_deviance > degrees_of_freedom) {
-  print("Overdispersion present in the model")
-} else {
-  print("No overdispersion present in the model")
-}
+        panel.grid.minor = element_blank()) +
+  ggtitle("Predicted Avian Species Richness in Neighborhoods")
 
 
 
-# ====================================================================
-# Negative Binomial Regression =======================================
-# ====================================================================
-
-# Overdispersion is present in model_glm, so we will
-# fit a negative binomial regression model
-model_glmnb <- glm.nb(spcsRch ~ treEqty_log, data = urbanforest_geom)
-
-# Check model summary
-summary(model_glmnb)
-
-
-# Create a scatterplot with a fitted line
-# Add the summary information as a subtitle
-summary_text <- paste("Negative binomial regression model summary:",
-                      "\nTheta =", round(model_glmnb$theta, 4),
-                      "\nEstimate (treEqty_log) =", round(coef(model_glmnb)[2], 4),
-                      "\nPseudo R-squared =", round(1 - (model_glmnb$deviance / model_glmnb$null.deviance), 4),
-                      "\nAnova p-value =", round(anova(model_glmnb, test='Chisq')$'Pr(>Chi)'[2], 4))
-
-
-# Display the plot with the summary information
-ggplot(urbanforest_geom, aes(x = treEqty_log, y = spcsRch)) +
-  geom_point(position = "jitter", alpha = 0.5) +
-  geom_smooth(method = "glm", formula = y ~ x, se = FALSE, color = "red") +
-  annotate("text", x = 3.85, y = 50, label = paste("Slope = ", round(coef(model_glm)[2], 3))) +
-  ggtitle("Relationship between Tree Equity and Bird Richness") +
-  xlab("Tree Equity (natural log)") +
-  ylab("Species Richness")+
-  theme(panel.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(colour = "black")) +
-  labs(subtitle = summary_text)
+# Plot histogram of predicted species richness
+hist(urbanforest_geom$predicted_species_richness,
+     xlab = "Predicted Species Richness",
+     ylab = "Frequency",
+     main = "Histogram of Predicted Species Richness")
 
 
 
 
-# Create diagnostic plots
-par(mfrow = c(1, 2))  # show plots side-by-side
-plot(model_glmnb, which = c(1, 2))
 
-1-(model_glmnb$deviance/model_glmnb$null.deviance) #PseudoR^2
-r2(model_glmnb) #Nagelkerke's R^2 for count data 
-anova(model_glmnb, test='Chisq') 
+# ====================================================
+# Model Diagnostics ==================================
+# ====================================================
 
-# Plots still showing a positive skew. 
-# Suggests that the model may still not be fully capturing the 
-# variability in the data. 
+
+# I wanted to assess goodness-of-fit, but
+# Too much noise in the data.
+# Never going to get great model fit without building 
+# a more complex model that includes other covariates
+
 
 
 
@@ -214,18 +266,18 @@ anova(model_glmnb, test='Chisq')
 # Simple Linear Regression ===========================================
 # ====================================================================
 
-# Let's see what happens when we account for polygon size
-# i.e., species richness per square kilometer (rchPrSK) 
+# NOTE: Didn't use this model.
+# Keeping in the script for future reference or modification. 
+
+
+# Species richness per square kilometer (rchPrSK) 
 # as a function of tree equity (treEqty)
 
 # Fit a simple linear regression model
-# I want to compare lm models using the treEqty' or 'treEqty_log'
 model_lm <- lm(rchPrSK ~ treEqty, data = urbanforest_geom)
-model_lm_log <- lm(rchPrSK ~ treEqty_log, data = urbanforest_geom)
 
 # Check model summary
 summary(model_lm)
-summary(model_lm_log)
 
 # Create a scatterplot with a fitted line
 # Add the summary information as a subtitle
@@ -252,29 +304,6 @@ ggplot(urbanforest_geom, aes(x = treEqty, y = rchPrSK)) +
 
 
 
-
-ggplot(aes(x=treEqty_log, y=rchPrSK), data=urbanforest_geom)+
-  geom_point()+
-  geom_smooth(method="lm", se=F)
-
-# Overall, in either case, the results suggest that there is 
-# a weak positive relationship between tree equity and richness per sq km
-
-
-#Regression diagnostics
-par(mfrow=c(2,2))   # view plots side-by-side
-plot(model_lm)
-layout(1)           # return to normal view
-
-hist(resid(model_lm)) # if normal distribution, good fit
-plot(urbanforest_geom$treEqty, resid(model_lm)) # if no pattern, good fit; if pattern, poor fit
-
-require(gvlma) #package for global validation
-summary(gvlma(model_lm))
-
-require(see)
-check_model(model_lm)
-check_posterior_predictions(model_lm) #posterior predictive checks
 
 
 
