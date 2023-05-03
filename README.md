@@ -2,7 +2,7 @@
 
 ## Summary
 
-This project uses community science observations of birds to investigate the relationship between tree equity scores (TES) and avian species richness in the semi-arid city of Tucson, Arizona, USA. Tree equity data was sourced from the [City of Tucson open data portal](https://gisdata.tucsonaz.gov/), while avian occurrence data was acquired from the Global Biodiversity Information Facility [(GBIF)](https://www.gbif.org/). Avian species richness in Tucson's neighborhoods was calculated by aggregating and summarizing all GBIF observations for each neighborhood and determining the total number of unique species observed. A Poisson regression within a generalized linear modeling framework was employed, using the log of neighborhood area as an offset term to account for variations in neighborhood size.
+This project uses community science observations of birds to investigate the relationship between tree equity scores (TES) and avian species richness in the semi-arid city of Tucson, Arizona, USA. Tree equity data was sourced from the [City of Tucson open data portal](https://gisdata.tucsonaz.gov/), while avian occurrence data was acquired from the Global Biodiversity Information Facility [(GBIF)](https://www.gbif.org/). Avian species richness was calculated by aggregating and summarizing all GBIF observations for each neighborhood and determining the total number of unique species observed. A Poisson regression within a generalized linear modeling framework was employed, using the log of neighborhood area as an offset term to account for variations in neighborhood size.
 
 ## Folders
 
